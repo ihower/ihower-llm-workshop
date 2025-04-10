@@ -1,6 +1,7 @@
 import os
-import requests
-import json
+from typing import List
+from pydantic import Field, BaseModel, ConfigDict
+from openai import OpenAI
 
 from langsmith import Client
 from my_app import recommend_book
@@ -8,18 +9,11 @@ client = Client()
 
 openai_api_key = os.environ.get("OPENAI_API_KEY", "sk-proj-1234567890")
 
-def get_completion(messages, model="gpt-4o-mini", temperature=0, max_tokens=600, format_type=None):
-  payload = { "model": model, "temperature": temperature, "messages": messages, "max_tokens": max_tokens }
-  if format_type:
-    payload["response_format"] =  { "type": format_type }
+openai_client= OpenAI(api_key=openai_api_key)
 
-  headers = { "Authorization": f'Bearer {openai_api_key}', "Content-Type": "application/json" }
-  response = requests.post('https://api.openai.com/v1/chat/completions', headers = headers, data = json.dumps(payload) )
-  obj = json.loads(response.text)
-  if response.status_code == 200 :
-    return obj["choices"][0]["message"]["content"]
-  else :
-    return obj["error"]
+class Score(BaseModel):
+  reasoning: str = Field(description="a explanation of your evaluation in Traditional Chinese (Taiwan)")
+  score: int = Field(description="1~5")
   
 def my_llm_call(inputs: dict) -> dict:
     answer = recommend_book(inputs["title"], inputs["description"])
@@ -63,25 +57,22 @@ Rating scale:
 4: Mostly meets criteria, needs minor adjustments
 5: Completely meets all criteria, no changes needed
 
-Please evaluate each criterion separately and then provide an overall score on a scale of 1 to 5.
-Provide your evaluation in Traditional Chinese (Taiwan).
+Please evaluate each criterion separately and then provide an overall score on a scale of 1 to 5."""
 
-[Output JSON example]
-{{
-  "reasoning": "a explanation of your evaluation"
-  "score": "integer"
-}}
-"""
-    messages = [
+    completion = openai_client.beta.chat.completions.parse(
+      model="gpt-4o",
+      messages = [
         {
             "role": "user",
             "content": prompt
         }
-    ]
-    response = get_completion(messages, model="gpt-4o", max_tokens=1000, format_type="json_object") # 評估需要推理，得用比較聰明的模型結果才好
-    eval_data = json.loads(response)
+      ],
+      response_format=Score
+    )  
 
-    return (eval_data["score"] / 5)
+    eval_data = completion.choices[0].message.parsed
+
+    return (eval_data.score / 5)
 
 experiment_results = client.evaluate(
     my_llm_call,
