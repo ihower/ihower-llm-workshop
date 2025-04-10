@@ -1,0 +1,11 @@
+[project]
+name = "workshop-eval"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "langsmith>=0.3.28",
+    "openai>=1.72.0",
+    "openevals>=0.0.18",
+]
