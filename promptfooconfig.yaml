@@ -1,0 +1,32 @@
+description: "My evaluation for the recommendation prompt"
+
+prompts:
+  - "寫推薦的話 {{title}} {{description}}"
+  - "Write a recommendation for {{title}} {{description}}"
+
+providers:
+  - id: 'file://eval-openai.py'
+    label: 'gpt-4o-mini'
+    config:
+      model: 'gpt-4o-mini'
+  - id: 'file://eval-openai.py'
+    label: 'gpt-4o-2024-11-20'
+    config:
+      model: 'gpt-4o-2024-11-20'
+
+tests:
+  - vars:
+      title: "三國演義"
+      description: "描述東漢末年至三國時期的歷史故事，講述魏、蜀、吳三國之間的政治和軍事斗爭。"
+      
+  - vars:
+      title: "紅樓夢"
+      description: "中國古典文學巨著，描述了賈、史、王、薛四大家族的興衰，以及眾多人物的情感糾葛。"
+      
+  - vars:
+      title: "西遊記"
+      description: "講述唐僧師徒四人西行取經，途中降妖除魔的神話故事。"
+      
+  - vars:
+      title: "水滸傳"
+      description: "描述宋江領導的一百零八位好漢聚義梁山泊，與朝廷對抗的英雄傳奇。"

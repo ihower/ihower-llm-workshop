@@ -41,7 +41,7 @@ Remember to choose the most appropriate category based on the book information p
   return response
 
 
-def recommend_book(name, description):
+def recommend_book(name, description, model="gpt-4o-mini"):
   messages = [
     {
       "role": "system",
@@ -52,5 +52,5 @@ def recommend_book(name, description):
       "content": f"書名: {name} \n 描述: {description}"
     }
   ]
-  response = get_completion(messages, model="gpt-4o-mini", temperature=0.5)
+  response = get_completion(messages, model=model, temperature=0.5)
   return response
