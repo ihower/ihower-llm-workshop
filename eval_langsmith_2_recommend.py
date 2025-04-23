@@ -1,8 +1,3 @@
-#  more build-in evaluator:
-#
-#  https://github.com/langchain-ai/openevals for LangSmith
-#  https://github.com/braintrustdata/autoevals for Braintrust
-
 import os
 from typing import List
 from pydantic import Field, BaseModel, ConfigDict
