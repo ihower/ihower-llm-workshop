@@ -18,7 +18,7 @@ class QueryResult(BaseModel):
     type: str = Field(description="Response type: either 'sub_query', 'intermediate_answer', or 'final_answer'")
     content: str = Field(description="The response content")
 
-def perform_tavily_search(query, n=10):
+def perform_tavily_search(query):
   search_response = tavily_client.search(query)
   contexts = [ x["content"] for x in search_response["results"] ]
   return contexts
