@@ -19,6 +19,14 @@ python eval_langsmith_2_recommend_openevals.py
 
 ## Prompt Engineering Example 2
 
+```
+python eval_braintrust_1_dataset.py
+python eval_braintrust_2_category.py
+python eval_braintrust_2_recommend.py
+```
+
+## Prompt Engineering Example 3
+
 安裝 https://www.promptfoo.dev/
 
 ```
