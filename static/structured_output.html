@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form 介面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+        }
+        .container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+        .left-column {
+            flex: 1;
+            padding: 20px;
+            border-right: 1px solid #ccc;
+            display: flex;
+            flex-direction: column;
+        }
+        .right-column {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+        }
+        .chat-form {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        textarea {
+            height: 10em;
+            margin-bottom: 10px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: none;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #response {
+            white-space: pre-wrap;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .loading {
+            display: none;
+            margin-top: 10px;
+            color: #666;
+        }
+        .header {
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .following-questions {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f0f8ff;
+            border-radius: 8px;
+            border-left: 4px solid #4CAF50;
+        }
+        .following-questions h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .following-questions ul {
+            margin-bottom: 0;
+            padding-left: 20px;
+        }
+        .following-questions li {
+            margin-bottom: 8px;
+            cursor: pointer;
+            color: #0066cc;
+        }
+        .following-questions li:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-column">
+            <div class="header">
+                <h2>結構化輸出 (Form 介面)</h2>
+            </div>
+            <form class="chat-form" id="chatForm">
+                <textarea id="query" placeholder="請輸入您的內容..."></textarea>
+                <div class="loading" id="loading">處理中...</div>
+                <button type="submit">送出</button>
+            </form>
+        </div>
+        <div class="right-column">
+            <div class="header">
+                <h2>回應內容</h2>
+            </div>
+            <div id="response_content"></div>
+            <div id="response_questions"></div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('chatForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const query = document.getElementById('query').value;
+            if (!query.trim()) return;
+            
+            const responseContentDiv = document.getElementById('response_content');
+            const responseQuestionsDiv = document.getElementById('response_questions');
+            const loadingDiv = document.getElementById('loading');
+            
+            // 清空上次回應並顯示載入中
+            responseContentDiv.innerHTML = '';
+            responseQuestionsDiv.innerHTML = '';
+            loadingDiv.style.display = 'block';
+            
+            const eventSource = new EventSource(`/api/v1/completion_json_stream?query=${encodeURIComponent(query)}`);
+            
+            eventSource.onmessage = function(event) {
+                // 收到第一個訊息時隱藏載入中提示
+                loadingDiv.style.display = 'none';
+                
+                if (event.data === "[DONE]") {
+                    eventSource.close();
+                    return;
+                }
+                
+                const jsonData = JSON.parse(event.data);
+                
+                if (jsonData.content) {
+                    // 直接累加 content 內容到現有的 div 中，不包裝新的 div
+                    responseContentDiv.innerHTML += jsonData.content;
+                } else if (jsonData.following_questions) {
+                    // 使用替換方式處理 following_questions
+                    responseQuestionsDiv.innerHTML = '';
+                    
+                    const questionsDiv = document.createElement('div');
+                    questionsDiv.className = 'following-questions';
+                    questionsDiv.innerHTML = `<h3>相關問題：</h3>
+                        <ul>
+                            ${jsonData.following_questions.map(q => `<li>${q}</li>`).join('')}
+                        </ul>`;
+                    responseQuestionsDiv.appendChild(questionsDiv);
+                    
+                    // 為每個問題添加點擊事件
+                    const questionItems = questionsDiv.querySelectorAll('li');
+                    questionItems.forEach(item => {
+                        item.addEventListener('click', function() {
+                            document.getElementById('query').value = this.textContent;
+                            document.getElementById('query').scrollIntoView();
+                            document.getElementById('query').focus();
+                        });
+                    });
+                }
+                
+                // 自動滾動到最底部
+                responseContentDiv.scrollTop = responseContentDiv.scrollHeight;
+            };
+            
+            eventSource.onerror = function(error) {
+                console.error("SSE Error:", error);
+                loadingDiv.style.display = 'none';
+                eventSource.close();
+            };
+        });
+    </script>
+</body>
+</html> 
