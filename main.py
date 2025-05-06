@@ -175,6 +175,7 @@ async def generate_agent_stream(query: str, previous_response_id: str = None):
         elif event.type == "run_item_stream_event":
             if event.item.type == "tool_call_item":
                 print("-- Tool was called")
+                yield f"data: {json.dumps({'message': 'CALL_TOOL', 'tool_name': str(event.item.raw_item.name), 'arguments': str(event.item.raw_item.arguments)})}\n\n"
             elif event.item.type == "tool_call_output_item":
                 print(f"-- Tool output: {event.item.output}")
             elif event.item.type == "message_output_item":

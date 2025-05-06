@@ -93,6 +93,23 @@
         .following-questions li:hover {
             text-decoration: underline;
         }
+        .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .user-message {
+            background-color: #e3f2fd;
+            margin-left: 20px;
+        }
+        .ai-message {
+            background-color: #f5f5f5;
+            margin-right: 20px;
+        }
+        .message-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
     </style>
 </head>
 <body>
@@ -117,7 +134,7 @@
     </div>
 
     <script>
-        let lastResponseId = null; // 新增變數來儲存 last_response_id
+        let lastResponseId = null;
         
         document.getElementById('chatForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -129,12 +146,20 @@
             const responseQuestionsDiv = document.getElementById('response_questions');
             const loadingDiv = document.getElementById('loading');
             
-            // 清空上次回應並顯示載入中
-            responseContentDiv.innerHTML = '';
-            responseQuestionsDiv.innerHTML = '';
+            // 添加用戶訊息
+            const userMessageDiv = document.createElement('div');
+            userMessageDiv.className = 'message user-message';
+            userMessageDiv.innerHTML = `<div class="message-label">User:</div>${query}`;
+            responseContentDiv.appendChild(userMessageDiv);
+            
+            // 創建 AI 訊息容器
+            const aiMessageDiv = document.createElement('div');
+            aiMessageDiv.className = 'message ai-message';
+            aiMessageDiv.innerHTML = '<div class="message-label">AI:</div>';
+            responseContentDiv.appendChild(aiMessageDiv);
+            
             loadingDiv.style.display = 'block';
             
-            // 構建 URL，加入 response_id 參數（如果有的話）
             let apiUrl = `/api/v1/agent_stream?query=${encodeURIComponent(query)}`;
             if (lastResponseId) {
                 apiUrl += `&previous_response_id=${lastResponseId}`;
@@ -143,22 +168,24 @@
             const eventSource = new EventSource(apiUrl);
             
             eventSource.onmessage = function(event) {
-                // 收到第一個訊息時隱藏載入中提示
                 loadingDiv.style.display = 'none';
                 
                 const jsonData = JSON.parse(event.data);
                 
                 if (jsonData.message === "DONE") {
-                    lastResponseId = jsonData.last_response_id; // 儲存新的 response_id
+                    lastResponseId = jsonData.last_response_id;
                     eventSource.close();
                     return;
                 }
                 
-                if (jsonData.content) {
-                    // 直接累加 content 內容到現有的 div 中，不包裝新的 div
-                    responseContentDiv.innerHTML += jsonData.content;
+                if (jsonData.message === "CALL_TOOL") {
+                    const toolMessage = `<span style="color: #666; font-style: italic; margin: 5px 0; padding: 8px; border: 1px dashed #999; border-radius: 5px; display: block;">🔧 執行工具: ${jsonData.tool_name} 參數 ${jsonData.arguments} ⚙️</span>`;
+                    const currentContent = aiMessageDiv.innerHTML.split('</div>')[1] || '';
+                    aiMessageDiv.innerHTML = `<div class="message-label">AI:</div>${currentContent}${toolMessage}`;
+                } else if (jsonData.content) {
+                    const currentContent = aiMessageDiv.innerHTML.split('</div>')[1] || '';
+                    aiMessageDiv.innerHTML = `<div class="message-label">AI:</div>${currentContent}${jsonData.content}`;
                 } else if (jsonData.following_questions) {
-                    // 使用替換方式處理 following_questions
                     responseQuestionsDiv.innerHTML = '';
                     
                     const questionsDiv = document.createElement('div');
@@ -169,7 +196,6 @@
                         </ul>`;
                     responseQuestionsDiv.appendChild(questionsDiv);
                     
-                    // 為每個問題添加點擊事件
                     const questionItems = questionsDiv.querySelectorAll('li');
                     questionItems.forEach(item => {
                         item.addEventListener('click', function() {
@@ -180,7 +206,6 @@
                     });
                 }
                 
-                // 自動滾動到最底部
                 responseContentDiv.scrollTop = responseContentDiv.scrollHeight;
             };
             
@@ -189,7 +214,9 @@
                 loadingDiv.style.display = 'none';
                 eventSource.close();
             };
+
+            document.getElementById('query').value = '';
         });
     </script>
 </body>
-</html> 
+</html>
