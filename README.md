@@ -33,3 +33,19 @@ python eval_braintrust_2_recommend.py
 npx promptfoo@latest eval -c promptfooconfig.yaml
 npx promptfoo@latest view
 ```
+
+## FastAPI SSE Example
+
+Copy `.env.example` to `.env` and edit it
+
+```
+uvicorn main:app --reload
+```
+
+Open
+
+```
+http://localhost:8000/static/completion.html
+http://localhost:8000/static/structured_output.html
+http://localhost:8000/static/agent.html
+```
