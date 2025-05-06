@@ -136,6 +136,25 @@
     <script>
         let lastResponseId = null;
         
+        // 生成唯一的 trace_id
+        function generateTraceId() {
+            const alphanumeric = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let randomPart = '';
+            
+            // 生成 32 位隨機字母數字字符串
+            for (let i = 0; i < 32; i++) {
+                const randomIndex = Math.floor(Math.random() * alphanumeric.length);
+                randomPart += alphanumeric.charAt(randomIndex);
+            }
+            
+            // 組合前綴和隨機部分
+            return `trace_${randomPart}`;
+        }
+        
+        // 初始化 trace_id
+        let traceId = generateTraceId();
+
+        console.log(`生成的 trace_id: ${traceId}`);
         document.getElementById('chatForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -160,7 +179,7 @@
             
             loadingDiv.style.display = 'block';
             
-            let apiUrl = `/api/v1/agent_stream?query=${encodeURIComponent(query)}`;
+            let apiUrl = `/api/v1/agent_stream?query=${encodeURIComponent(query)}&trace_id=${traceId}`;
             if (lastResponseId) {
                 apiUrl += `&previous_response_id=${lastResponseId}`;
             }

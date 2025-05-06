@@ -126,12 +126,12 @@ def web_search(query: str):
 
 
 @app.get("/api/v1/agent_stream")
-async def get_agent_stream(query: str, previous_response_id: str = None):
-    response = StreamingResponse(generate_agent_stream(query, previous_response_id), media_type="text/event-stream")
+async def get_agent_stream(query: str, previous_response_id: str = None, trace_id: str = None):
+    response = StreamingResponse(generate_agent_stream(query, previous_response_id, trace_id), media_type="text/event-stream")
     response.headers["X-Accel-Buffering"] = "no"
     return response
 
-async def generate_agent_stream(query: str, previous_response_id: str = None):
+async def generate_agent_stream(query: str, previous_response_id: str = None, trace_id: str = None):
 
     agent = Agent(
         name="Shop Agent",
@@ -142,7 +142,8 @@ async def generate_agent_stream(query: str, previous_response_id: str = None):
     )
     print(f"previous_response_id: {previous_response_id}")
 
-    result = Runner.run_streamed(agent, input=query, previous_response_id=previous_response_id)
+    with trace("FastAPI Agent", trace_id=trace_id):
+        result = Runner.run_streamed(agent, input=query, previous_response_id=previous_response_id)
 
     json_str = ''
     previous_content = ''
