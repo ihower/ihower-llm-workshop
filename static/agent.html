@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form 介面</title>
+    <title>Chat 介面</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -99,7 +99,7 @@
     <div class="container">
         <div class="left-column">
             <div class="header">
-                <h2>結構化輸出 (Form 介面)</h2>
+                <h2>Agent 對話 (Chat 介面)</h2>
             </div>
             <form class="chat-form" id="chatForm">
                 <textarea id="query" placeholder="請輸入您的內容..."></textarea>
@@ -117,6 +117,8 @@
     </div>
 
     <script>
+        let lastResponseId = null; // 新增變數來儲存 last_response_id
+        
         document.getElementById('chatForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -132,7 +134,13 @@
             responseQuestionsDiv.innerHTML = '';
             loadingDiv.style.display = 'block';
             
-            const eventSource = new EventSource(`/api/v1/completion_json_stream?query=${encodeURIComponent(query)}`);
+            // 構建 URL，加入 response_id 參數（如果有的話）
+            let apiUrl = `/api/v1/agent_stream?query=${encodeURIComponent(query)}`;
+            if (lastResponseId) {
+                apiUrl += `&previous_response_id=${lastResponseId}`;
+            }
+            
+            const eventSource = new EventSource(apiUrl);
             
             eventSource.onmessage = function(event) {
                 // 收到第一個訊息時隱藏載入中提示
@@ -141,6 +149,7 @@
                 const jsonData = JSON.parse(event.data);
                 
                 if (jsonData.message === "DONE") {
+                    lastResponseId = jsonData.last_response_id; // 儲存新的 response_id
                     eventSource.close();
                     return;
                 }

@@ -10,6 +10,7 @@ dependencies = [
     "braintrust>=0.0.201",
     "fastapi>=0.115.12",
     "langsmith>=0.3.28",
+    "openai-agents>=0.0.12",
     "openai>=1.72.0",
     "openevals>=0.0.18",
     "python-dotenv>=1.1.0",
