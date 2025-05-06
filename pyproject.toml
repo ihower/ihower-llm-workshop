@@ -8,8 +8,11 @@ dependencies = [
     "aiohttp>=3.11.16",
     "autoevals>=0.0.127",
     "braintrust>=0.0.201",
+    "fastapi>=0.115.12",
     "langsmith>=0.3.28",
     "openai>=1.72.0",
     "openevals>=0.0.18",
+    "python-dotenv>=1.1.0",
     "tavily-python>=0.5.4",
+    "uvicorn>=0.34.2",
 ]
