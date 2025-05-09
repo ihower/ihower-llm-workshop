@@ -49,3 +49,15 @@ http://localhost:8000/static/completion.html
 http://localhost:8000/static/structured_output.html
 http://localhost:8000/static/agent.html
 ```
+
+
+## Build Your Own Code Interpreter
+
+參考自 https://cookbook.openai.com/examples/object_oriented_agentic_approach/secure_code_interpreter_tool_for_llm_agents
+
+`docker build -t python_sandbox:latest .`
+
+`docker run -d --name sandbox --network none --cap-drop all --pids-limit 64 --tmpfs /tmp:rw,size=64M   python_sandbox:latest sleep infinity`
+
+`python demo_code_interpreter.py`
+
