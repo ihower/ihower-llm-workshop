@@ -17,4 +17,6 @@ dependencies = [
     "tavily-python>=0.5.4",
     "uvicorn>=0.34.2",
     "mcp[cli]>=1.7.1",
+    "smolagents[toolkit]>=1.15.0",
+    "litellm>=1.68.1",
 ]
