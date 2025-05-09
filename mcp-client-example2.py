@@ -8,9 +8,49 @@ import asyncio
 import os
 import shutil
 from contextlib import AsyncExitStack
+from typing import Any
 
-from agents import Agent, Runner, gen_trace_id, trace
+from agents import Agent, Runner, gen_trace_id, trace, AgentHooks, RunContextWrapper, Tool
 from agents.mcp import MCPServer, MCPServerStdio
+
+# https://github.com/openai/openai-agents-python/blob/main/examples/basic/agent_lifecycle_example.py
+class CustomAgentHooks(AgentHooks):
+    def __init__(self, display_name: str):
+        self.event_counter = 0
+        self.display_name = display_name
+
+    async def on_start(self, context: RunContextWrapper, agent: Agent) -> None:
+        self.event_counter += 1
+        print(f" {self.display_name} ({self.event_counter}): Agent {agent.name} started")
+
+    async def on_end(self, context: RunContextWrapper, agent: Agent, output: Any) -> None:
+        self.event_counter += 1
+        print(
+            f" {self.display_name} ({self.event_counter}): Agent {agent.name} ended with output {output}"
+        )
+
+    async def on_handoff(self, context: RunContextWrapper, agent: Agent, source: Agent) -> None:
+        self.event_counter += 1
+        print(
+            f" {self.display_name} ({self.event_counter}): Agent {source.name} handed off to {agent.name}"
+        )
+
+    async def on_tool_start(self, context: RunContextWrapper, agent: Agent, tool: Tool) -> None:
+        self.event_counter += 1
+        print(
+            f" {self.display_name} ({self.event_counter}): Agent {agent.name} started tool {tool.name}"
+        )
+
+    async def on_tool_end(
+        self, context: RunContextWrapper, agent: Agent, tool: Tool, result: str
+    ) -> None:
+        self.event_counter += 1
+        print(
+            f" {self.display_name} ({self.event_counter}): Agent {agent.name} ended tool {tool.name} with result {result}"
+        )
+
+
+###
 
 async def run(mcp_servers):
     agent = Agent(
@@ -52,6 +92,7 @@ Remember to focus on providing high-quality, relevant search results that best a
 Always respond in Traditional Chinese (Taiwan).
 """,
         mcp_servers=mcp_servers,
+        hooks=CustomAgentHooks(display_name="🪝"),
     )
 
     result = None
