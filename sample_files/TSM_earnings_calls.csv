@@ -1,0 +1,348 @@
+ticker,year,quarter,name,full_name,numeric_revenue,numeric_revenue_annual,unit,currency,percentage_revenue_quarterly,percentage_revenue_annual,qoq_growth,yoy_growth_quarterly,yoy_growth_annual,source
+TSM,2024,4,Total,Total,868.46,2894.31,B,TWD,100,100,14.3,38.8,33.9,
+TSM,2024,4,3nm,Technology > 3nm,,,,TWD,26.0,18.0,,,,Revenue by Technology
+TSM,2024,4,5nm,Technology > 5nm,,,,TWD,34.0,34.0,,,,Revenue by Technology
+TSM,2024,4,7nm,Technology > 7nm,,,,TWD,14.0,17.0,,,,Revenue by Technology
+TSM,2024,4,16nm,Technology > 16nm,,,,TWD,7.0,8.0,,,,Revenue by Technology
+TSM,2024,4,20nm,Technology > 20nm,,,,TWD,0.0,1.0,,,,Revenue by Technology
+TSM,2024,4,28nm,Technology > 28nm,,,,TWD,6.0,7.0,,,,Revenue by Technology
+TSM,2024,4,40/45nm,Technology > 40/45nm,,,,TWD,3.0,4.0,,,,Revenue by Technology
+TSM,2024,4,65nm,Technology > 65nm,,,,TWD,4.0,4.0,,,,Revenue by Technology
+TSM,2024,4,90nm,Technology > 90nm,,,,TWD,1.0,1.0,,,,Revenue by Technology
+TSM,2024,4,0.11/0.13um,Technology > 0.11/0.13um,,,,TWD,2.0,2.0,,,,Revenue by Technology
+TSM,2024,4,0.15/0.18um,Technology > 0.15/0.18um,,,,TWD,3.0,4.0,,,,Revenue by Technology
+TSM,2024,4,0.25um and above,Technology > 0.25um and above,,,,TWD,0.0,1.0,,,,Revenue by Technology
+TSM,2024,4,High Performance Computing,Platform > High Performance Computing,,,,TWD,53.0,51.0,19.0,,58.0,Revenue by Platform
+TSM,2024,4,Smartphone,Platform > Smartphone,,,,TWD,35.0,35.0,17.0,,23.0,Revenue by Platform
+TSM,2024,4,Internet of Things,Platform > Internet of Things,,,,TWD,5.0,6.0,-15.0,,2.0,Revenue by Platform
+TSM,2024,4,Automotive,Platform > Automotive,,,,TWD,4.0,5.0,6.0,,4.0,Revenue by Platform
+TSM,2024,4,Digital Consumer Electronics,Platform > Digital Consumer Electronics,,,,TWD,1.0,2.0,-6.0,,2.0,Revenue by Platform
+TSM,2024,4,Others,Platform > Others,,,,TWD,2.0,3.0,2.0,,-14.0,Revenue by Platform
+TSM,2024,4,North America,Geography > North America,,,,TWD,75.0,70.0,,,,Revenue by Geography
+TSM,2024,4,China,Geography > China,,,,TWD,9.0,11.0,,,,Revenue by Geography
+TSM,2024,4,Asia Pacific,Geography > Asia Pacific,,,,TWD,9.0,10.0,,,,Revenue by Geography
+TSM,2024,4,Japan,Geography > Japan,,,,TWD,4.0,5.0,,,,Revenue by Geography
+TSM,2024,4,EMEA,Geography > EMEA,,,,TWD,3.0,4.0,,,,Revenue by Geography
+TSM,2024,3,Total,Total,759.69,,B,NTD,100,100,12.8,39.0,,
+TSM,2024,3,3nm,Technology > 3nm,,,,NTD,20.0,,,,,3Q24 Revenue by Technology Pie Chart
+TSM,2024,3,5nm,Technology > 5nm,,,,NTD,32.0,,,,,3Q24 Revenue by Technology Pie Chart
+TSM,2024,3,7nm,Technology > 7nm,,,,NTD,17.0,,,,,3Q24 Revenue by Technology Pie Chart
+TSM,2024,3,16nm,Technology > 16nm,,,,NTD,8.0,,,,,3Q24 Revenue by Technology Pie Chart
+TSM,2024,3,20nm,Technology > 20nm,,,,NTD,0.0,,,,,3Q24 Revenue by Technology Pie Chart
+TSM,2024,3,28nm,Technology > 28nm,,,,NTD,7.0,,,,,3Q24 Revenue by Technology Pie Chart
+TSM,2024,3,40/45nm,Technology > 40/45nm,,,,NTD,4.0,,,,,3Q24 Revenue by Technology Pie Chart
+TSM,2024,3,65nm,Technology > 65nm,,,,NTD,4.0,,,,,3Q24 Revenue by Technology Pie Chart
+TSM,2024,3,90nm,Technology > 90nm,,,,NTD,1.0,,,,,3Q24 Revenue by Technology Pie Chart
+TSM,2024,3,0.11/0.13um,Technology > 0.11/0.13um,,,,NTD,2.0,,,,,3Q24 Revenue by Technology Pie Chart
+TSM,2024,3,0.15/0.18um,Technology > 0.15/0.18um,,,,NTD,4.0,,,,,3Q24 Revenue by Technology Pie Chart
+TSM,2024,3,0.25um and above,Technology > 0.25um and above,,,,NTD,1.0,,,,,3Q24 Revenue by Technology Pie Chart
+TSM,2024,3,High Performance Computing,Platform > High Performance Computing,,,,NTD,51.0,,11.0,,,3Q24 Revenue by Platform Pie Chart
+TSM,2024,3,Smartphone,Platform > Smartphone,,,,NTD,34.0,,16.0,,,3Q24 Revenue by Platform Pie Chart
+TSM,2024,3,Internet of Things,Platform > Internet of Things,,,,NTD,7.0,,35.0,,,3Q24 Revenue by Platform Pie Chart
+TSM,2024,3,Automotive,Platform > Automotive,,,,NTD,5.0,,6.0,,,3Q24 Revenue by Platform Pie Chart
+TSM,2024,3,Digital Consumer Electronics,Platform > Digital Consumer Electronics,,,,NTD,1.0,,-19.0,,,3Q24 Revenue by Platform Pie Chart
+TSM,2024,3,Others,Platform > Others,,,,NTD,2.0,,8.0,,,3Q24 Revenue by Platform Pie Chart
+TSM,2024,3,North America,Geography > North America,,,,NTD,71.0,,,,,3Q24 Revenue by Geography Table
+TSM,2024,3,China,Geography > China,,,,NTD,11.0,,,,,3Q24 Revenue by Geography Table
+TSM,2024,3,Asia Pacific,Geography > Asia Pacific,,,,NTD,10.0,,,,,3Q24 Revenue by Geography Table
+TSM,2024,3,Japan,Geography > Japan,,,,NTD,5.0,,,,,3Q24 Revenue by Geography Table
+TSM,2024,3,EMEA,Geography > EMEA,,,,NTD,3.0,,,,,3Q24 Revenue by Geography Table
+TSM,2024,2,Total,Total,20.82,,B,USD,100,100,10.3,32.8,,
+TSM,2024,2,3nm,Technology > 3nm,,,,USD,15.0,,,,,2Q24 Revenue by Technology Pie Chart
+TSM,2024,2,5nm,Technology > 5nm,,,,USD,35.0,,,,,2Q24 Revenue by Technology Pie Chart
+TSM,2024,2,7nm,Technology > 7nm,,,,USD,17.0,,,,,2Q24 Revenue by Technology Pie Chart
+TSM,2024,2,16nm,Technology > 16nm,,,,USD,9.0,,,,,2Q24 Revenue by Technology Pie Chart
+TSM,2024,2,20nm,Technology > 20nm,,,,USD,0.0,,,,,2Q24 Revenue by Technology Pie Chart
+TSM,2024,2,28nm,Technology > 28nm,,,,USD,8.0,,,,,2Q24 Revenue by Technology Pie Chart
+TSM,2024,2,40/45nm,Technology > 40/45nm,,,,USD,5.0,,,,,2Q24 Revenue by Technology Pie Chart
+TSM,2024,2,65nm,Technology > 65nm,,,,USD,3.0,,,,,2Q24 Revenue by Technology Pie Chart
+TSM,2024,2,90nm,Technology > 90nm,,,,USD,1.0,,,,,2Q24 Revenue by Technology Pie Chart
+TSM,2024,2,0.11/0.13um,Technology > 0.11/0.13um,,,,USD,2.0,,,,,2Q24 Revenue by Technology Pie Chart
+TSM,2024,2,0.15/0.18um,Technology > 0.15/0.18um,,,,USD,4.0,,,,,2Q24 Revenue by Technology Pie Chart
+TSM,2024,2,0.25um and above,Technology > 0.25um and above,,,,USD,1.0,,,,,2Q24 Revenue by Technology Pie Chart
+TSM,2024,2,High Performance Computing,Platform > High Performance Computing,,,,USD,52.0,,28.0,,,2Q24 Revenue by Platform Pie Chart
+TSM,2024,2,Smartphone,Platform > Smartphone,,,,USD,33.0,,-1.0,,,2Q24 Revenue by Platform Pie Chart
+TSM,2024,2,Internet of Things,Platform > Internet of Things,,,,USD,6.0,,6.0,,,2Q24 Revenue by Platform Pie Chart
+TSM,2024,2,Automotive,Platform > Automotive,,,,USD,5.0,,5.0,,,2Q24 Revenue by Platform Pie Chart
+TSM,2024,2,Digital Consumer Electronics,Platform > Digital Consumer Electronics,,,,USD,2.0,,20.0,,,2Q24 Revenue by Platform Pie Chart
+TSM,2024,2,Others,Platform > Others,,,,USD,2.0,,5.0,,,2Q24 Revenue by Platform Pie Chart
+TSM,2024,2,North America,Geography > North America,,,,USD,65.0,,,,,2Q24 Revenue by Geography Table
+TSM,2024,2,China,Geography > China,,,,USD,16.0,,,,,2Q24 Revenue by Geography Table
+TSM,2024,2,Asia Pacific,Geography > Asia Pacific,,,,USD,9.0,,,,,2Q24 Revenue by Geography Table
+TSM,2024,2,Japan,Geography > Japan,,,,USD,6.0,,,,,2Q24 Revenue by Geography Table
+TSM,2024,2,EMEA,Geography > EMEA,,,,USD,4.0,,,,,2Q24 Revenue by Geography Table
+TSM,2024,1,Total,Total,592.64,,B,NTD,100,100,-5.3,16.5,,
+TSM,2024,1,3nm,Technology > 3nm,,,,NTD,9.0,,,,,"1Q24 Revenue by Technology,Revenue Analysis"
+TSM,2024,1,5nm,Technology > 5nm,,,,NTD,37.0,,,,,"1Q24 Revenue by Technology,Revenue Analysis"
+TSM,2024,1,7nm,Technology > 7nm,,,,NTD,19.0,,,,,"1Q24 Revenue by Technology,Revenue Analysis"
+TSM,2024,1,16nm,Technology > 16nm,,,,NTD,9.0,,,,,1Q24 Revenue by Technology
+TSM,2024,1,28nm,Technology > 28nm,,,,NTD,8.0,,,,,1Q24 Revenue by Technology
+TSM,2024,1,40/45nm,Technology > 40/45nm,,,,NTD,5.0,,,,,1Q24 Revenue by Technology
+TSM,2024,1,65nm,Technology > 65nm,,,,NTD,4.0,,,,,1Q24 Revenue by Technology
+TSM,2024,1,90nm,Technology > 90nm,,,,NTD,1.0,,,,,1Q24 Revenue by Technology
+TSM,2024,1,0.11/0.13um,Technology > 0.11/0.13um,,,,NTD,3.0,,,,,1Q24 Revenue by Technology
+TSM,2024,1,0.15/0.18um,Technology > 0.15/0.18um,,,,NTD,4.0,,,,,1Q24 Revenue by Technology
+TSM,2024,1,0.25um and above,Technology > 0.25um and above,,,,NTD,1.0,,,,,1Q24 Revenue by Technology
+TSM,2024,1,High Performance Computing,Platform > High Performance Computing,,,,NTD,46.0,,3.0,,,"1Q24 Revenue by Platform,Revenue Analysis"
+TSM,2024,1,Smartphone,Platform > Smartphone,,,,NTD,38.0,,-16.0,,,"1Q24 Revenue by Platform,Revenue Analysis"
+TSM,2024,1,Internet of Things,Platform > Internet of Things,,,,NTD,6.0,,5.0,,,"1Q24 Revenue by Platform,Revenue Analysis"
+TSM,2024,1,Automotive,Platform > Automotive,,,,NTD,6.0,,0.0,,,"1Q24 Revenue by Platform,Revenue Analysis"
+TSM,2024,1,Digital Consumer Electronics,Platform > Digital Consumer Electronics,,,,NTD,2.0,,33.0,,,"1Q24 Revenue by Platform,Revenue Analysis"
+TSM,2024,1,Others,Platform > Others,,,,NTD,2.0,,-8.0,,,"1Q24 Revenue by Platform,Revenue Analysis"
+TSM,2024,1,North America,Geography > North America,,,,NTD,69.0,,,,,"1Q24 Revenue by Geography,Revenue Analysis"
+TSM,2024,1,China,Geography > China,,,,NTD,9.0,,,,,"1Q24 Revenue by Geography,Revenue Analysis"
+TSM,2024,1,Asia Pacific,Geography > Asia Pacific,,,,NTD,12.0,,,,,"1Q24 Revenue by Geography,Revenue Analysis"
+TSM,2024,1,Japan,Geography > Japan,,,,NTD,6.0,,,,,"1Q24 Revenue by Geography,Revenue Analysis"
+TSM,2024,1,EMEA,Geography > EMEA,,,,NTD,4.0,,,,,"1Q24 Revenue by Geography,Revenue Analysis"
+TSM,2023,4,Total,Total,625.53,2161.74,B,NTD,100,100,14.4,0.0,-4.5,
+TSM,2023,4,3nm,Technology > 3nm,,,,NTD,15.0,6.0,,,,"Q4 2023 Revenue by Technology Pie Chart,2023 Revenue by Technology Pie Chart"
+TSM,2023,4,5nm,Technology > 5nm,,,,NTD,35.0,33.0,,,,"Q4 2023 Revenue by Technology Pie Chart,2023 Revenue by Technology Pie Chart"
+TSM,2023,4,7nm,Technology > 7nm,,,,NTD,17.0,19.0,,,,"Q4 2023 Revenue by Technology Pie Chart,2023 Revenue by Technology Pie Chart"
+TSM,2023,4,16nm,Technology > 16nm,,,,NTD,8.0,10.0,,,,"Q4 2023 Revenue by Technology Pie Chart,2023 Revenue by Technology Pie Chart"
+TSM,2023,4,20nm,Technology > 20nm,,,,NTD,0.0,1.0,,,,"Q4 2023 Revenue by Technology Pie Chart,2023 Revenue by Technology Pie Chart"
+TSM,2023,4,28nm,Technology > 28nm,,,,NTD,7.0,10.0,,,,"Q4 2023 Revenue by Technology Pie Chart,2023 Revenue by Technology Pie Chart"
+TSM,2023,4,40/45nm,Technology > 40/45nm,,,,NTD,4.0,6.0,,,,"Q4 2023 Revenue by Technology Pie Chart,2023 Revenue by Technology Pie Chart"
+TSM,2023,4,65nm,Technology > 65nm,,,,NTD,5.0,5.0,,,,"Q4 2023 Revenue by Technology Pie Chart,2023 Revenue by Technology Pie Chart"
+TSM,2023,4,90nm,Technology > 90nm,,,,NTD,1.0,1.0,,,,"Q4 2023 Revenue by Technology Pie Chart,2023 Revenue by Technology Pie Chart"
+TSM,2023,4,0.11/0.13um,Technology > 0.11/0.13um,,,,NTD,3.0,2.0,,,,"Q4 2023 Revenue by Technology Pie Chart,2023 Revenue by Technology Pie Chart"
+TSM,2023,4,0.15/0.18um,Technology > 0.15/0.18um,,,,NTD,4.0,5.0,,,,"Q4 2023 Revenue by Technology Pie Chart,2023 Revenue by Technology Pie Chart"
+TSM,2023,4,0.25um and above,Technology > 0.25um and above,,,,NTD,1.0,1.0,,,,"Q4 2023 Revenue by Technology Pie Chart,2023 Revenue by Technology Pie Chart"
+TSM,2023,4,High Performance Computing,Platform > High Performance Computing,,,,NTD,43.0,43.0,17.0,,0.0,"Q4 2023 Revenue by Platform Pie Chart,2023 Revenue by Platform Pie Chart"
+TSM,2023,4,Smartphone,Platform > Smartphone,,,,NTD,43.0,38.0,27.0,,-8.0,"Q4 2023 Revenue by Platform Pie Chart,2023 Revenue by Platform Pie Chart"
+TSM,2023,4,Internet of Things,Platform > Internet of Things,,,,NTD,5.0,8.0,-29.0,,-17.0,"Q4 2023 Revenue by Platform Pie Chart,2023 Revenue by Platform Pie Chart"
+TSM,2023,4,Automotive,Platform > Automotive,,,,NTD,5.0,6.0,13.0,,15.0,"Q4 2023 Revenue by Platform Pie Chart,2023 Revenue by Platform Pie Chart"
+TSM,2023,4,Digital Consumer Electronics,Platform > Digital Consumer Electronics,,,,NTD,2.0,2.0,-35.0,,-16.0,"Q4 2023 Revenue by Platform Pie Chart,2023 Revenue by Platform Pie Chart"
+TSM,2023,4,Others,Platform > Others,,,,NTD,2.0,3.0,-16.0,,-6.0,"Q4 2023 Revenue by Platform Pie Chart,2023 Revenue by Platform Pie Chart"
+TSM,2023,3,Total,Total,17.28,,B,USD,100,100,10.2,-14.6,,
+TSM,2023,3,3nm,Technology > 3nm,,,,USD,6.0,,,,,"Q3 2023 Revenue by Technology Pie Chart,Q3 2023 Taiwan Semiconductor Manufacturing Co Ltd Earnings Call"
+TSM,2023,3,5nm,Technology > 5nm,,,,USD,37.0,,,,,"Q3 2023 Revenue by Technology Pie Chart,Q3 2023 Taiwan Semiconductor Manufacturing Co Ltd Earnings Call"
+TSM,2023,3,7nm,Technology > 7nm,,,,USD,16.0,,,,,"Q3 2023 Revenue by Technology Pie Chart,Q3 2023 Taiwan Semiconductor Manufacturing Co Ltd Earnings Call"
+TSM,2023,3,16nm,Technology > 16nm,,,,USD,9.0,,,,,Q3 2023 Revenue by Technology Pie Chart
+TSM,2023,3,20nm,Technology > 20nm,,,,USD,1.0,,,,,Q3 2023 Revenue by Technology Pie Chart
+TSM,2023,3,28nm,Technology > 28nm,,,,USD,10.0,,,,,Q3 2023 Revenue by Technology Pie Chart
+TSM,2023,3,40/45nm,Technology > 40/45nm,,,,USD,6.0,,,,,Q3 2023 Revenue by Technology Pie Chart
+TSM,2023,3,65nm,Technology > 65nm,,,,USD,6.0,,,,,Q3 2023 Revenue by Technology Pie Chart
+TSM,2023,3,90nm,Technology > 90nm,,,,USD,1.0,,,,,Q3 2023 Revenue by Technology Pie Chart
+TSM,2023,3,0.11/0.13um,Technology > 0.11/0.13um,,,,USD,3.0,,,,,Q3 2023 Revenue by Technology Pie Chart
+TSM,2023,3,0.15/0.18um,Technology > 0.15/0.18um,,,,USD,4.0,,,,,Q3 2023 Revenue by Technology Pie Chart
+TSM,2023,3,0.25um and above,Technology > 0.25um and above,,,,USD,1.0,,,,,Q3 2023 Revenue by Technology Pie Chart
+TSM,2023,3,High Performance Computing,Platform > High Performance Computing,,,,USD,42.0,,6.0,,,"Q3 2023 Revenue by Platform Pie Chart,Q3 2023 Taiwan Semiconductor Manufacturing Co Ltd Earnings Call"
+TSM,2023,3,Smartphone,Platform > Smartphone,,,,USD,39.0,,33.0,,,"Q3 2023 Revenue by Platform Pie Chart,Q3 2023 Taiwan Semiconductor Manufacturing Co Ltd Earnings Call"
+TSM,2023,3,Internet of Things,Platform > Internet of Things,,,,USD,9.0,,24.0,,,"Q3 2023 Revenue by Platform Pie Chart,Q3 2023 Taiwan Semiconductor Manufacturing Co Ltd Earnings Call"
+TSM,2023,3,Automotive,Platform > Automotive,,,,USD,5.0,,-24.0,,,"Q3 2023 Revenue by Platform Pie Chart,Q3 2023 Taiwan Semiconductor Manufacturing Co Ltd Earnings Call"
+TSM,2023,3,Digital Consumer Electronics,Platform > Digital Consumer Electronics,,,,USD,2.0,,-1.0,,,"Q3 2023 Revenue by Platform Pie Chart,Q3 2023 Taiwan Semiconductor Manufacturing Co Ltd Earnings Call"
+TSM,2023,3,Others,Platform > Others,,,,USD,3.0,,-2.0,,,"Q3 2023 Revenue by Platform Pie Chart,Q3 2023 Taiwan Semiconductor Manufacturing Co Ltd Earnings Call"
+TSM,2023,2,Total,Total,480.84,,B,NTD,100,100,-5.5,-10.0,,
+TSM,2023,2,5nm,Technology > 5nm,,,,NTD,30.0,,,,,2Q23 Revenue by Technology Pie Chart
+TSM,2023,2,7nm,Technology > 7nm,,,,NTD,23.0,,,,,2Q23 Revenue by Technology Pie Chart
+TSM,2023,2,16nm,Technology > 16nm,,,,NTD,11.0,,,,,2Q23 Revenue by Technology Pie Chart
+TSM,2023,2,28nm,Technology > 28nm,,,,NTD,11.0,,,,,2Q23 Revenue by Technology Pie Chart
+TSM,2023,2,20nm,Technology > 20nm,,,,NTD,1.0,,,,,2Q23 Revenue by Technology Pie Chart
+TSM,2023,2,40/45nm,Technology > 40/45nm,,,,NTD,7.0,,,,,2Q23 Revenue by Technology Pie Chart
+TSM,2023,2,65nm,Technology > 65nm,,,,NTD,7.0,,,,,2Q23 Revenue by Technology Pie Chart
+TSM,2023,2,90nm,Technology > 90nm,,,,NTD,2.0,,,,,2Q23 Revenue by Technology Pie Chart
+TSM,2023,2,0.11/0.13um,Technology > 0.11/0.13um,,,,NTD,2.0,,,,,2Q23 Revenue by Technology Pie Chart
+TSM,2023,2,0.15/0.18um,Technology > 0.15/0.18um,,,,NTD,5.0,,,,,2Q23 Revenue by Technology Pie Chart
+TSM,2023,2,0.25um and above,Technology > 0.25um and above,,,,NTD,1.0,,,,,2Q23 Revenue by Technology Pie Chart
+TSM,2023,2,High Performance Computing,Platform > High Performance Computing,,,,NTD,44.0,,-5.0,,,2Q23 Revenue by Platform Pie Chart
+TSM,2023,2,Smartphone,Platform > Smartphone,,,,NTD,33.0,,-9.0,,,2Q23 Revenue by Platform Pie Chart
+TSM,2023,2,Internet of Things,Platform > Internet of Things,,,,NTD,8.0,,-11.0,,,2Q23 Revenue by Platform Pie Chart
+TSM,2023,2,Automotive,Platform > Automotive,,,,NTD,8.0,,3.0,,,2Q23 Revenue by Platform Pie Chart
+TSM,2023,2,Digital Consumer Electronics,Platform > Digital Consumer Electronics,,,,NTD,3.0,,25.0,,,2Q23 Revenue by Platform Pie Chart
+TSM,2023,2,Others,Platform > Others,,,,NTD,4.0,,-5.0,,,2Q23 Revenue by Platform Pie Chart
+TSM,2023,2,North America,Geography > North America,,,,NTD,66.0,,,,,2Q23 Revenue by Geography
+TSM,2023,2,China,Geography > China,,,,NTD,12.0,,,,,2Q23 Revenue by Geography
+TSM,2023,2,Asia Pacific,Geography > Asia Pacific,,,,NTD,8.0,,,,,2Q23 Revenue by Geography
+TSM,2023,2,EMEA,Geography > EMEA,,,,NTD,7.0,,,,,2Q23 Revenue by Geography
+TSM,2023,2,Japan,Geography > Japan,,,,NTD,7.0,,,,,2Q23 Revenue by Geography
+TSM,2023,1,Total,Total,16.72,,B,USD,100,100,-16.1,-4.8,,
+TSM,2023,1,5-nanometer,Technology > 5-nanometer,,,,USD,31.0,,,,,5-nanometer process technology contributed 31% of wafer revenue in the first quarter.
+TSM,2023,1,7-nanometer,Technology > 7-nanometer,,,,USD,20.0,,,,,7-nanometer accounted for 20% of wafer revenue.
+TSM,2023,1,Advanced Technologies,Technology > Advanced Technologies,,,,USD,51.0,,,,,"Advanced Technologies, defined as 7-nanometer and more advanced technologies, accounted for 51% of total wafer revenue."
+TSM,2023,1,HPC,Platform > HPC,,,,USD,44.0,,-14.0,,,HPC declined 14% quarter-over-quarter and accounted for 44% of our first quarter revenue.
+TSM,2023,1,Smartphone,Platform > Smartphone,,,,USD,34.0,,-27.0,,,Smartphone declined 27% to account for 34%.
+TSM,2023,1,IoT,Platform > IoT,,,,USD,9.0,,-19.0,,,IoT declined 19% to account for 9%.
+TSM,2023,1,Automotive,Platform > Automotive,,,,USD,7.0,,5.0,,,Automotive increased 5% to account for 7%.
+TSM,2023,1,DCE,Platform > DCE,,,,USD,2.0,,-5.0,,,DCE decreased 5% to account for 2%.
+TSM,2022,4,Total,Total,625.53,2263.89,B,NTD,100,100,2.0,42.8,42.6,
+TSM,2022,4,5nm,Technology > 5nm,,,,NTD,32.0,26.0,,,,"Q4 2022 Revenue by Technology Pie Chart,Q4 2022 Revenue by Technology Transcript"
+TSM,2022,4,7nm,Technology > 7nm,,,,NTD,22.0,27.0,,,,"Q4 2022 Revenue by Technology Pie Chart,Q4 2022 Revenue by Technology Transcript"
+TSM,2022,4,16nm,Technology > 16nm,,,,NTD,12.0,13.0,,,,Q4 2022 Revenue by Technology Pie Chart
+TSM,2022,4,28nm,Technology > 28nm,,,,NTD,11.0,10.0,,,,Q4 2022 Revenue by Technology Pie Chart
+TSM,2022,4,40/45nm,Technology > 40/45nm,,,,NTD,7.0,7.0,,,,Q4 2022 Revenue by Technology Pie Chart
+TSM,2022,4,65nm,Technology > 65nm,,,,NTD,5.0,5.0,,,,Q4 2022 Revenue by Technology Pie Chart
+TSM,2022,4,90nm,Technology > 90nm,,,,NTD,2.0,2.0,,,,Q4 2022 Revenue by Technology Pie Chart
+TSM,2022,4,0.11/0.13um,Technology > 0.11/0.13um,,,,NTD,3.0,3.0,,,,Q4 2022 Revenue by Technology Pie Chart
+TSM,2022,4,0.15/0.18um,Technology > 0.15/0.18um,,,,NTD,5.0,6.0,,,,Q4 2022 Revenue by Technology Pie Chart
+TSM,2022,4,0.25um and above,Technology > 0.25um and above,,,,NTD,1.0,1.0,,,,Q4 2022 Revenue by Technology Pie Chart
+TSM,2022,4,High Performance Computing,Platform > High Performance Computing,,,,NTD,42.0,41.0,10.0,,59.0,"Q4 2022 Revenue by Platform Pie Chart,Q4 2022 Revenue by Platform Transcript"
+TSM,2022,4,Smartphone,Platform > Smartphone,,,,NTD,38.0,39.0,-4.0,,28.0,"Q4 2022 Revenue by Platform Pie Chart,Q4 2022 Revenue by Platform Transcript"
+TSM,2022,4,Internet of Things,Platform > Internet of Things,,,,NTD,8.0,9.0,-11.0,,47.0,"Q4 2022 Revenue by Platform Pie Chart,Q4 2022 Revenue by Platform Transcript"
+TSM,2022,4,Automotive,Platform > Automotive,,,,NTD,6.0,5.0,10.0,,74.0,"Q4 2022 Revenue by Platform Pie Chart,Q4 2022 Revenue by Platform Transcript"
+TSM,2022,4,Digital Consumer Electronics,Platform > Digital Consumer Electronics,,,,NTD,2.0,3.0,-23.0,,1.0,"Q4 2022 Revenue by Platform Pie Chart,Q4 2022 Revenue by Platform Transcript"
+TSM,2022,4,Others,Platform > Others,,,,NTD,4.0,3.0,28.0,,51.0,"Q4 2022 Revenue by Platform Pie Chart,Q4 2022 Revenue by Platform Transcript"
+TSM,2022,3,Total,Total,20.23,,B,USD,100,100,11.4,35.9,,
+TSM,2022,3,5nm,Technology > 5nm,,,,USD,28.0,,,,,3Q22 Revenue by Technology Pie Chart
+TSM,2022,3,7nm,Technology > 7nm,,,,USD,26.0,,,,,3Q22 Revenue by Technology Pie Chart
+TSM,2022,3,16nm,Technology > 16nm,,,,USD,12.0,,,,,3Q22 Revenue by Technology Pie Chart
+TSM,2022,3,28nm,Technology > 28nm,,,,USD,10.0,,,,,3Q22 Revenue by Technology Pie Chart
+TSM,2022,3,40/45nm,Technology > 40/45nm,,,,USD,7.0,,,,,3Q22 Revenue by Technology Pie Chart
+TSM,2022,3,65nm,Technology > 65nm,,,,USD,5.0,,,,,3Q22 Revenue by Technology Pie Chart
+TSM,2022,3,90nm,Technology > 90nm,,,,USD,2.0,,,,,3Q22 Revenue by Technology Pie Chart
+TSM,2022,3,0.11/0.13um,Technology > 0.11/0.13um,,,,USD,3.0,,,,,3Q22 Revenue by Technology Pie Chart
+TSM,2022,3,0.15/0.18um,Technology > 0.15/0.18um,,,,USD,6.0,,,,,3Q22 Revenue by Technology Pie Chart
+TSM,2022,3,0.25um and above,Technology > 0.25um and above,,,,USD,1.0,,,,,3Q22 Revenue by Technology Pie Chart
+TSM,2022,3,Smartphone,Platform > Smartphone,,,,USD,41.0,,25.0,,,3Q22 Revenue by Platform Pie Chart
+TSM,2022,3,HPC,Platform > HPC,,,,USD,39.0,,4.0,,,3Q22 Revenue by Platform Pie Chart
+TSM,2022,3,IoT,Platform > IoT,,,,USD,10.0,,33.0,,,3Q22 Revenue by Platform Pie Chart
+TSM,2022,3,Automotive,Platform > Automotive,,,,USD,5.0,,15.0,,,3Q22 Revenue by Platform Pie Chart
+TSM,2022,3,DCE,Platform > DCE,,,,USD,2.0,,-2.0,,,3Q22 Revenue by Platform Pie Chart
+TSM,2022,3,Others,Platform > Others,,,,USD,3.0,,10.0,,,3Q22 Revenue by Platform Pie Chart
+TSM,2022,3,North America,Geography > North America,,,,USD,72.0,,,,,3Q22 Revenue by Geography Table
+TSM,2022,3,Asia Pacific,Geography > Asia Pacific,,,,USD,10.0,,,,,3Q22 Revenue by Geography Table
+TSM,2022,3,China,Geography > China,,,,USD,8.0,,,,,3Q22 Revenue by Geography Table
+TSM,2022,3,EMEA,Geography > EMEA,,,,USD,5.0,,,,,3Q22 Revenue by Geography Table
+TSM,2022,3,Japan,Geography > Japan,,,,USD,5.0,,,,,3Q22 Revenue by Geography Table
+TSM,2022,2,Total,Total,534.14,,B,NTD,100,100,8.8,43.5,,
+TSM,2022,2,5nm,Technology > 5nm,,,,NTD,21.0,,,,,"Page 2: Revenue Analysis,Page 4: 2Q22 Revenue by Technology"
+TSM,2022,2,7nm,Technology > 7nm,,,,NTD,30.0,,,,,"Page 2: Revenue Analysis,Page 4: 2Q22 Revenue by Technology"
+TSM,2022,2,16nm,Technology > 16nm,,,,NTD,14.0,,,,,Page 4: 2Q22 Revenue by Technology
+TSM,2022,2,28nm,Technology > 28nm,,,,NTD,10.0,,,,,Page 4: 2Q22 Revenue by Technology
+TSM,2022,2,40/45nm,Technology > 40/45nm,,,,NTD,8.0,,,,,Page 4: 2Q22 Revenue by Technology
+TSM,2022,2,65nm,Technology > 65nm,,,,NTD,5.0,,,,,Page 4: 2Q22 Revenue by Technology
+TSM,2022,2,90nm,Technology > 90nm,,,,NTD,2.0,,,,,Page 4: 2Q22 Revenue by Technology
+TSM,2022,2,0.11/0.13um,Technology > 0.11/0.13um,,,,NTD,3.0,,,,,Page 4: 2Q22 Revenue by Technology
+TSM,2022,2,0.15/0.18um,Technology > 0.15/0.18um,,,,NTD,6.0,,,,,Page 4: 2Q22 Revenue by Technology
+TSM,2022,2,0.25um and above,Technology > 0.25um and above,,,,NTD,1.0,,,,,Page 4: 2Q22 Revenue by Technology
+TSM,2022,2,Smartphone,Platform > Smartphone,,,,NTD,38.0,,3.0,,,"Page 2: Revenue Analysis,Page 5: 2Q22 Revenue by Platform"
+TSM,2022,2,High Performance Computing,Platform > High Performance Computing,,,,NTD,43.0,,13.0,,,"Page 2: Revenue Analysis,Page 5: 2Q22 Revenue by Platform"
+TSM,2022,2,Internet of Things,Platform > Internet of Things,,,,NTD,8.0,,14.0,,,"Page 2: Revenue Analysis,Page 5: 2Q22 Revenue by Platform"
+TSM,2022,2,Automotive,Platform > Automotive,,,,NTD,5.0,,14.0,,,"Page 2: Revenue Analysis,Page 5: 2Q22 Revenue by Platform"
+TSM,2022,2,Digital Consumer Electronics,Platform > Digital Consumer Electronics,,,,NTD,3.0,,5.0,,,"Page 2: Revenue Analysis,Page 5: 2Q22 Revenue by Platform"
+TSM,2022,2,Others,Platform > Others,,,,NTD,3.0,,7.0,,,"Page 2: Revenue Analysis,Page 5: 2Q22 Revenue by Platform"
+TSM,2022,2,North America,Geography > North America,,,,NTD,64.0,,,,,Page 2: Revenue Analysis
+TSM,2022,2,Asia Pacific,Geography > Asia Pacific,,,,NTD,12.0,,,,,Page 2: Revenue Analysis
+TSM,2022,2,China,Geography > China,,,,NTD,13.0,,,,,Page 2: Revenue Analysis
+TSM,2022,2,EMEA,Geography > EMEA,,,,NTD,6.0,,,,,Page 2: Revenue Analysis
+TSM,2022,2,Japan,Geography > Japan,,,,NTD,5.0,,,,,Page 2: Revenue Analysis
+TSM,2022,1,Total,Total,17.57,,B,USD,100,100,11.6,36.0,,
+TSM,2022,1,5nm,Technology > 5nm,,,,USD,20.0,,,,,"Slide: 1Q22 Revenue by Technology,Transcript: Wendell Huang's presentation"
+TSM,2022,1,7nm,Technology > 7nm,,,,USD,30.0,,,,,"Slide: 1Q22 Revenue by Technology,Transcript: Wendell Huang's presentation"
+TSM,2022,1,Advanced Technologies,Technology > Advanced Technologies,,,,USD,50.0,,,,,"Slide: 1Q22 Revenue by Technology,Transcript: Wendell Huang's presentation"
+TSM,2022,1,Smartphone,Platform > Smartphone,,,,USD,40.0,,1.0,,,"Slide: 1Q22 Revenue by Platform,Transcript: Wendell Huang's presentation"
+TSM,2022,1,HPC,Platform > HPC,,,,USD,41.0,,26.0,,,"Slide: 1Q22 Revenue by Platform,Transcript: Wendell Huang's presentation"
+TSM,2022,1,IoT,Platform > IoT,,,,USD,8.0,,5.0,,,"Slide: 1Q22 Revenue by Platform,Transcript: Wendell Huang's presentation"
+TSM,2022,1,Automotive,Platform > Automotive,,,,USD,5.0,,26.0,,,"Slide: 1Q22 Revenue by Platform,Transcript: Wendell Huang's presentation"
+TSM,2022,1,DCE,Platform > DCE,,,,USD,3.0,,8.0,,,"Slide: 1Q22 Revenue by Platform,Transcript: Wendell Huang's presentation"
+TSM,2022,1,Others,Platform > Others,,,,USD,3.0,,9.0,,,Slide: 1Q22 Revenue by Platform
+TSM,2021,4,Total,Total,438.19,1587.42,B,NTD,100,100,5.7,21.2,18.5,
+TSM,2021,4,5nm,Technology > 5nm,,,,NTD,23.0,19.0,,,,"4Q21 Revenue by Technology,2021 Revenue by Technology"
+TSM,2021,4,7nm,Technology > 7nm,,,,NTD,27.0,31.0,,,,"4Q21 Revenue by Technology,2021 Revenue by Technology"
+TSM,2021,4,16nm,Technology > 16nm,,,,NTD,13.0,14.0,,,,"4Q21 Revenue by Technology,2021 Revenue by Technology"
+TSM,2021,4,28nm,Technology > 28nm,,,,NTD,11.0,11.0,,,,"4Q21 Revenue by Technology,2021 Revenue by Technology"
+TSM,2021,4,Smartphone,Platform > Smartphone,,,,NTD,44.0,44.0,7.0,,8.0,"4Q21 Revenue by Platform,2021 Revenue by Platform"
+TSM,2021,4,High Performance Computing,Platform > High Performance Computing,,,,NTD,37.0,37.0,3.0,,34.0,"4Q21 Revenue by Platform,2021 Revenue by Platform"
+TSM,2021,4,Internet of Things,Platform > Internet of Things,,,,NTD,9.0,8.0,3.0,,21.0,"4Q21 Revenue by Platform,2021 Revenue by Platform"
+TSM,2021,4,Automotive,Platform > Automotive,,,,NTD,4.0,4.0,10.0,,51.0,"4Q21 Revenue by Platform,2021 Revenue by Platform"
+TSM,2021,4,Digital Consumer Electronics,Platform > Digital Consumer Electronics,,,,NTD,3.0,4.0,2.0,,2.0,"4Q21 Revenue by Platform,2021 Revenue by Platform"
+TSM,2021,4,Others,Platform > Others,,,,NTD,3.0,3.0,22.0,,9.0,"4Q21 Revenue by Platform,2021 Revenue by Platform"
+TSM,2021,3,Total,Total,14.88,,B,USD,100,100,12.0,22.6,,
+TSM,2021,3,5nm,Technology > 5nm,,,,USD,18.0,,,,,"3Q21 Revenue by Technology Pie Chart,Transcript: Wendell Huang's presentation"
+TSM,2021,3,7nm,Technology > 7nm,,,,USD,34.0,,,,,"3Q21 Revenue by Technology Pie Chart,Transcript: Wendell Huang's presentation"
+TSM,2021,3,Smartphone,Platform > Smartphone,,,,USD,44.0,,15.0,,,"3Q21 Revenue by Platform Pie Chart,Transcript: Wendell Huang's presentation"
+TSM,2021,3,High Performance Computing,Platform > High Performance Computing,,,,USD,37.0,,9.0,,,"3Q21 Revenue by Platform Pie Chart,Transcript: Wendell Huang's presentation"
+TSM,2021,3,Internet of Things,Platform > Internet of Things,,,,USD,9.0,,23.0,,,"3Q21 Revenue by Platform Pie Chart,Transcript: Wendell Huang's presentation"
+TSM,2021,3,Automotive,Platform > Automotive,,,,USD,4.0,,5.0,,,"3Q21 Revenue by Platform Pie Chart,Transcript: Wendell Huang's presentation"
+TSM,2021,3,Digital Consumer Electronics,Platform > Digital Consumer Electronics,,,,USD,3.0,,-2.0,,,"3Q21 Revenue by Platform Pie Chart,Transcript: Wendell Huang's presentation"
+TSM,2021,3,North America,Geography > North America,,,,USD,65.0,,,,,3Q21 Revenue by Geography Table
+TSM,2021,3,Asia Pacific,Geography > Asia Pacific,,,,USD,13.0,,,,,3Q21 Revenue by Geography Table
+TSM,2021,3,China,Geography > China,,,,USD,11.0,,,,,3Q21 Revenue by Geography Table
+TSM,2021,3,EMEA,Geography > EMEA,,,,USD,6.0,,,,,3Q21 Revenue by Geography Table
+TSM,2021,3,Japan,Geography > Japan,,,,USD,5.0,,,,,3Q21 Revenue by Geography Table
+TSM,2021,2,Total,Total,372.15,,B,NTD,100,100,2.7,19.8,,
+TSM,2021,2,5nm,Technology > 5nm,,,,NTD,18.0,,,,,"2Q21 Revenue by Technology,Revenue Analysis"
+TSM,2021,2,7nm,Technology > 7nm,,,,NTD,31.0,,,,,"2Q21 Revenue by Technology,Revenue Analysis"
+TSM,2021,2,16nm,Technology > 16nm,,,,NTD,14.0,,,,,"2Q21 Revenue by Technology,Revenue Analysis"
+TSM,2021,2,28nm,Technology > 28nm,,,,NTD,11.0,,,,,"2Q21 Revenue by Technology,Revenue Analysis"
+TSM,2021,2,40/45nm,Technology > 40/45nm,,,,NTD,7.0,,,,,"2Q21 Revenue by Technology,Revenue Analysis"
+TSM,2021,2,65nm,Technology > 65nm,,,,NTD,5.0,,,,,"2Q21 Revenue by Technology,Revenue Analysis"
+TSM,2021,2,90nm,Technology > 90nm,,,,NTD,3.0,,,,,"2Q21 Revenue by Technology,Revenue Analysis"
+TSM,2021,2,0.11/0.13um,Technology > 0.11/0.13um,,,,NTD,3.0,,,,,"2Q21 Revenue by Technology,Revenue Analysis"
+TSM,2021,2,0.15/0.18um,Technology > 0.15/0.18um,,,,NTD,6.0,,,,,"2Q21 Revenue by Technology,Revenue Analysis"
+TSM,2021,2,0.25um and above,Technology > 0.25um and above,,,,NTD,2.0,,,,,"2Q21 Revenue by Technology,Revenue Analysis"
+TSM,2021,2,Smartphone,Platform > Smartphone,,,,NTD,42.0,,-3.0,,,"2Q21 Revenue by Platform,Revenue Analysis"
+TSM,2021,2,High Performance Computing,Platform > High Performance Computing,,,,NTD,39.0,,12.0,,,"2Q21 Revenue by Platform,Revenue Analysis"
+TSM,2021,2,Internet of Things,Platform > Internet of Things,,,,NTD,8.0,,-2.0,,,"2Q21 Revenue by Platform,Revenue Analysis"
+TSM,2021,2,Automotive,Platform > Automotive,,,,NTD,4.0,,12.0,,,"2Q21 Revenue by Platform,Revenue Analysis"
+TSM,2021,2,Digital Consumer Electronics,Platform > Digital Consumer Electronics,,,,NTD,4.0,,-12.0,,,"2Q21 Revenue by Platform,Revenue Analysis"
+TSM,2021,2,Others,Platform > Others,,,,NTD,3.0,,4.0,,,"2Q21 Revenue by Platform,Revenue Analysis"
+TSM,2021,2,North America,Geography > North America,,,,NTD,64.0,,,,,Revenue Analysis
+TSM,2021,2,Asia Pacific,Geography > Asia Pacific,,,,NTD,15.0,,,,,Revenue Analysis
+TSM,2021,2,China,Geography > China,,,,NTD,11.0,,,,,Revenue Analysis
+TSM,2021,2,EMEA,Geography > EMEA,,,,NTD,6.0,,,,,Revenue Analysis
+TSM,2021,2,Japan,Geography > Japan,,,,NTD,4.0,,,,,Revenue Analysis
+TSM,2021,1,Total,Total,12.92,,B,USD,100,100,1.9,16.7,,
+TSM,2021,1,5nm,Technology > 5nm,,,,USD,14.0,,,,,Page 2: Revenue Analysis
+TSM,2021,1,7nm,Technology > 7nm,,,,USD,35.0,,,,,Page 2: Revenue Analysis
+TSM,2021,1,Smartphone,Platform > Smartphone,,,,USD,45.0,,-11.0,,,Page 2: Revenue Analysis
+TSM,2021,1,High Performance Computing,Platform > High Performance Computing,,,,USD,35.0,,14.0,,,Page 2: Revenue Analysis
+TSM,2021,1,Internet of Things,Platform > Internet of Things,,,,USD,9.0,,10.0,,,Page 2: Revenue Analysis
+TSM,2021,1,Automotive,Platform > Automotive,,,,USD,4.0,,31.0,,,Page 2: Revenue Analysis
+TSM,2021,1,Digital Consumer Electronics,Platform > Digital Consumer Electronics,,,,USD,4.0,,11.0,,,Page 2: Revenue Analysis
+TSM,2021,1,North America,Geography > North America,,,,USD,67.0,,,,,Page 2: Revenue Analysis
+TSM,2021,1,Asia Pacific,Geography > Asia Pacific,,,,USD,17.0,,,,,Page 2: Revenue Analysis
+TSM,2021,1,China,Geography > China,,,,USD,6.0,,,,,Page 2: Revenue Analysis
+TSM,2021,1,EMEA,Geography > EMEA,,,,USD,6.0,,,,,Page 2: Revenue Analysis
+TSM,2021,1,Japan,Geography > Japan,,,,USD,4.0,,,,,Page 2: Revenue Analysis
+TSM,2020,4,Total,Total,12.68,45.51,B,USD,100,100,4.4,22.0,31.4,
+TSM,2020,4,5nm,Technology > 5nm,,,,USD,20.0,8.0,,,,"4Q20 Revenue by Technology,Revenue Analysis"
+TSM,2020,4,7nm,Technology > 7nm,,,,USD,29.0,33.0,,,,"4Q20 Revenue by Technology,Revenue Analysis"
+TSM,2020,4,16nm,Technology > 16nm,,,,USD,13.0,17.0,,,,"4Q20 Revenue by Technology,Revenue Analysis"
+TSM,2020,4,Smartphone,Platform > Smartphone,,,,USD,51.0,48.0,13.0,,23.0,"4Q20 Revenue by Platform,2020 Revenue by Platform,Revenue Analysis"
+TSM,2020,4,High Performance Computing,Platform > High Performance Computing,,,,USD,31.0,33.0,-14.0,,39.0,"4Q20 Revenue by Platform,2020 Revenue by Platform,Revenue Analysis"
+TSM,2020,4,Internet of Things,Platform > Internet of Things,,,,USD,7.0,8.0,-13.0,,28.0,"4Q20 Revenue by Platform,2020 Revenue by Platform,Revenue Analysis"
+TSM,2020,4,Automotive,Platform > Automotive,,,,USD,3.0,3.0,27.0,,-7.0,"4Q20 Revenue by Platform,2020 Revenue by Platform,Revenue Analysis"
+TSM,2020,4,Digital Consumer Electronics,Platform > Digital Consumer Electronics,,,,USD,4.0,4.0,29.0,,2.0,"4Q20 Revenue by Platform,2020 Revenue by Platform,Revenue Analysis"
+TSM,2020,4,Others,Platform > Others,,,,USD,4.0,4.0,10.0,,5.0,"4Q20 Revenue by Platform,2020 Revenue by Platform,Revenue Analysis"
+TSM,2020,3,Total,Total,12.14,,B,USD,100,100,16.9,29.2,,
+TSM,2020,3,5nm,Technology > 5nm,,,,USD,8.0,,,,,"3Q20 Revenue by Technology,Transcript"
+TSM,2020,3,7nm,Technology > 7nm,,,,USD,35.0,,,,,"3Q20 Revenue by Technology,Transcript"
+TSM,2020,3,16nm,Technology > 16nm,,,,USD,18.0,,,,,"3Q20 Revenue by Technology,Transcript"
+TSM,2020,3,28nm,Technology > 28nm,,,,USD,12.0,,,,,3Q20 Revenue by Technology
+TSM,2020,3,Smartphone,Platform > Smartphone,,,,USD,46.0,,12.0,,,"3Q20 Revenue by Platform,Transcript"
+TSM,2020,3,High Performance Computing,Platform > High Performance Computing,,,,USD,37.0,,25.0,,,"3Q20 Revenue by Platform,Transcript"
+TSM,2020,3,Internet of Things,Platform > Internet of Things,,,,USD,9.0,,24.0,,,"3Q20 Revenue by Platform,Transcript"
+TSM,2020,3,Automotive,Platform > Automotive,,,,USD,2.0,,-23.0,,,"3Q20 Revenue by Platform,Transcript"
+TSM,2020,3,Digital Consumer Electronics,Platform > Digital Consumer Electronics,,,,USD,3.0,,-24.0,,,"3Q20 Revenue by Platform,Transcript"
+TSM,2020,3,North America,Geography > North America,,,,USD,59.0,,,,,3Q20 Revenue by Geography
+TSM,2020,3,China,Geography > China,,,,USD,22.0,,,,,3Q20 Revenue by Geography
+TSM,2020,3,Asia Pacific,Geography > Asia Pacific,,,,USD,10.0,,,,,3Q20 Revenue by Geography
+TSM,2020,3,EMEA,Geography > EMEA,,,,USD,5.0,,,,,3Q20 Revenue by Geography
+TSM,2020,3,Japan,Geography > Japan,,,,USD,4.0,,,,,3Q20 Revenue by Geography
+TSM,2020,2,Total,Total,310.7,,B,NTD,100,100,0.0,28.9,,
+TSM,2020,2,7nm,Technology > 7nm,,,,NTD,36.0,,,,,"2Q20 Revenue by Technology,Revenue Analysis"
+TSM,2020,2,16nm,Technology > 16nm,,,,NTD,18.0,,,,,"2Q20 Revenue by Technology,Revenue Analysis"
+TSM,2020,2,Smartphone,Platform > Smartphone,,,,NTD,47.0,,-4.0,,,"2Q20 Revenue by Platform,Revenue Analysis"
+TSM,2020,2,High Performance Computing,Platform > High Performance Computing,,,,NTD,33.0,,12.0,,,"2Q20 Revenue by Platform,Revenue Analysis"
+TSM,2020,2,Internet of Things,Platform > Internet of Things,,,,NTD,8.0,,-5.0,,,"2Q20 Revenue by Platform,Revenue Analysis"
+TSM,2020,2,Automotive,Platform > Automotive,,,,NTD,4.0,,-13.0,,,"2Q20 Revenue by Platform,Revenue Analysis"
+TSM,2020,2,Digital Consumer Electronics,Platform > Digital Consumer Electronics,,,,NTD,5.0,,-9.0,,,"2Q20 Revenue by Platform,Revenue Analysis"
+TSM,2020,2,Others,Platform > Others,,,,NTD,3.0,,-5.0,,,"2Q20 Revenue by Platform,Revenue Analysis"
+TSM,2020,1,Total,Total,10.31,,B,USD,100,100,-0.8,45.2,,
+TSM,2020,1,7nm,Technology > 7nm,,,,USD,35.0,,,,,"1Q20 Revenue by Technology,Revenue Analysis"
+TSM,2020,1,10nm,Technology > 10nm,,,,USD,0.5,,,,,"1Q20 Revenue by Technology,Revenue Analysis"
+TSM,2020,1,16nm,Technology > 16nm,,,,USD,19.0,,,,,"1Q20 Revenue by Technology,Revenue Analysis"
+TSM,2020,1,20nm,Technology > 20nm,,,,USD,1.0,,,,,1Q20 Revenue by Technology
+TSM,2020,1,28nm,Technology > 28nm,,,,USD,14.0,,,,,1Q20 Revenue by Technology
+TSM,2020,1,40/45nm,Technology > 40/45nm,,,,USD,10.0,,,,,1Q20 Revenue by Technology
+TSM,2020,1,65nm,Technology > 65nm,,,,USD,6.0,,,,,1Q20 Revenue by Technology
+TSM,2020,1,90nm,Technology > 90nm,,,,USD,3.0,,,,,1Q20 Revenue by Technology
+TSM,2020,1,0.11/0.13um,Technology > 0.11/0.13um,,,,USD,2.0,,,,,1Q20 Revenue by Technology
+TSM,2020,1,0.15/0.18um,Technology > 0.15/0.18um,,,,USD,8.0,,,,,1Q20 Revenue by Technology
+TSM,2020,1,0.25um and above,Technology > 0.25um and above,,,,USD,2.0,,,,,1Q20 Revenue by Technology
+TSM,2020,1,Smartphone,Platform > Smartphone,,,,USD,49.0,,-9.0,,,"1Q20 Revenue by Platform,Revenue Analysis"
+TSM,2020,1,High Performance Computing,Platform > High Performance Computing,,,,USD,30.0,,3.0,,,"1Q20 Revenue by Platform,Revenue Analysis"
+TSM,2020,1,Internet of Things,Platform > Internet of Things,,,,USD,9.0,,8.0,,,"1Q20 Revenue by Platform,Revenue Analysis"
+TSM,2020,1,Automotive,Platform > Automotive,,,,USD,4.0,,-1.0,,,"1Q20 Revenue by Platform,Revenue Analysis"
+TSM,2020,1,Digital Consumer Electronics,Platform > Digital Consumer Electronics,,,,USD,5.0,,44.0,,,"1Q20 Revenue by Platform,Revenue Analysis"
+TSM,2020,1,Others,Platform > Others,,,,USD,3.0,,-5.0,,,"1Q20 Revenue by Platform,Revenue Analysis"
