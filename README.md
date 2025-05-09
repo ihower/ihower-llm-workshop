@@ -61,3 +61,9 @@ http://localhost:8000/static/agent.html
 
 `python demo_code_interpreter.py`
 
+## MCP demo
+
+`uv add "mcp[cli]"`
+
+`mcp install mcp install my_mcp_server.py` 這會安裝到 claude app 中
+`mcp dev my_mcp_server.py` 這會打開 MCP Inspector 在 http://127.0.0.1:6274

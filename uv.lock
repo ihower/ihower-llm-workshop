@@ -816,6 +816,12 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/ae/79/fe0e20c3358997a80911af51bad927b5ea2f343ef95ab092b19c9cc48b59/mcp-1.7.1-py3-none-any.whl", hash = "sha256:f7e6108977db6d03418495426c7ace085ba2341b75197f8727f96f9cfd30057a", size = 100365 },
 ]
 
+[package.optional-dependencies]
+cli = [
+    { name = "python-dotenv" },
+    { name = "typer" },
+]
+
 [[package]]
 name = "mdurl"
 version = "0.1.2"
@@ -1603,6 +1609,15 @@ wheels = [
 ]
 
 [[package]]
+name = "shellingham"
+version = "1.5.4"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/58/15/8b3609fd3830ef7b27b655beb4b4e9c62313a4e8da8c676e142cc210d58e/shellingham-1.5.4.tar.gz", hash = "sha256:8dbca0739d487e5bd35ab3ca4b36e11c4078f3a234bfce294b0a0291363404de", size = 10310 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e0/f9/0595336914c5619e5f28a1fb793285925a8cd4b432c9da0a987836c7f822/shellingham-1.5.4-py2.py3-none-any.whl", hash = "sha256:7ecfff8f2fd72616f7481040475a65b2bf8af90a56c89140852d1120324e8686", size = 9755 },
+]
+
+[[package]]
 name = "smmap"
 version = "5.0.2"
 source = { registry = "https://pypi.org/simple" }
@@ -1780,6 +1795,21 @@ wheels = [
 ]
 
 [[package]]
+name = "typer"
+version = "0.15.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "click" },
+    { name = "rich" },
+    { name = "shellingham" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/98/1a/5f36851f439884bcfe8539f6a20ff7516e7b60f319bbaf69a90dc35cc2eb/typer-0.15.3.tar.gz", hash = "sha256:818873625d0569653438316567861899f7e9972f2e6e0c16dab608345ced713c", size = 101641 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/48/20/9d953de6f4367163d23ec823200eb3ecb0050a2609691e512c8b95827a9b/typer-0.15.3-py3-none-any.whl", hash = "sha256:c86a65ad77ca531f03de08d1b9cb67cd09ad02ddddf4b34745b5008f43b239bd", size = 45253 },
+]
+
+[[package]]
 name = "types-requests"
 version = "2.32.0.20250328"
 source = { registry = "https://pypi.org/simple" }
@@ -1845,6 +1875,7 @@ dependencies = [
     { name = "braintrust" },
     { name = "fastapi" },
     { name = "langsmith" },
+    { name = "mcp", extra = ["cli"] },
     { name = "openai" },
     { name = "openai-agents" },
     { name = "openevals" },
@@ -1860,6 +1891,7 @@ requires-dist = [
     { name = "braintrust", specifier = ">=0.0.201" },
     { name = "fastapi", specifier = ">=0.115.12" },
     { name = "langsmith", specifier = ">=0.3.28" },
+    { name = "mcp", extras = ["cli"], specifier = ">=1.7.1" },
     { name = "openai", specifier = ">=1.72.0" },
     { name = "openai-agents", specifier = ">=0.0.12" },
     { name = "openevals", specifier = ">=0.0.18" },
