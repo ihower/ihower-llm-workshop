@@ -78,11 +78,14 @@ async def generate_completion_json_stream(query: str):
       previous_content = ""
       async for event in stream:
           if event.type == "content.delta":
-              json_str += event.delta
+              json_str += event.delta # 累加完整的 json 字串來做解析
+
               try:
                   result = jiter.from_json(json_str.encode('utf-8'), partial_mode="trailing-strings")
                   
-                  # 針對 content 只輸出 increment 最後文字
+                  # 兩種輸出方式:
+
+                  # 方法一: 針對 content 欄位，我們只輸出 delta 新增的字: 前端做累加，例如 esponseContentDiv.innerHTML += jsonData.content;
                   if "content" in result:
                       current_content = result["content"]
                       if current_content != previous_content:
@@ -91,6 +94,8 @@ async def generate_completion_json_stream(query: str):
                       elif current_content == previous_content:
                           result["content"] = ''
                       
+                  # 方法二: 其他欄位保持完整輸出: 前端要顯示的話，需要整個區塊替換掉
+
                   yield f"data: {json.dumps(result)}\n\n"
               except ValueError:
                   # JSON 還不完整，繼續等待更多數據
