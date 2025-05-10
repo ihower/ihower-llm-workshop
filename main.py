@@ -164,7 +164,6 @@ async def generate_agent_stream(query: str, previous_response_id: str = None, tr
             try:
                 result = jiter.from_json(json_str.encode('utf-8'), partial_mode="trailing-strings")
                 
-                # 針對 content 只輸出 increment 最後文字
                 if "content" in result:
                     current_content = result["content"]
                     if current_content != previous_content:
