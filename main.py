@@ -6,6 +6,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 import json
 import jiter
+from datetime import datetime
 
 from dotenv import load_dotenv
 from openai import AsyncOpenAI
@@ -137,10 +138,11 @@ async def get_agent_stream(query: str, previous_response_id: str = None, trace_i
     return response
 
 async def generate_agent_stream(query: str, previous_response_id: str = None, trace_id: str = None):
-
+    today = datetime.now().strftime("%Y-%m-%d")
+    
     agent = Agent(
-        name="Shop Agent",
-        instructions= """You are a helpful assistant that can answer questions and help with tasks. Always respond in Traditional Chinese.""",
+        name="QA Agent",
+        instructions= f"""You are a helpful assistant that can answer questions and help with tasks. Always respond in Traditional Chinese. Today's date is {today}.""",
         tools=[web_search],
         model="gpt-4.1-mini",
         output_type=QueryResult
