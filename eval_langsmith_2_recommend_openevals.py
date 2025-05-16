@@ -3,6 +3,9 @@
 #  https://github.com/langchain-ai/openevals for LangSmith
 #  https://github.com/braintrustdata/autoevals for Braintrust
 
+from dotenv import load_dotenv
+load_dotenv(".env", override=True)
+
 import os
 from typing import List
 from pydantic import Field, BaseModel, ConfigDict

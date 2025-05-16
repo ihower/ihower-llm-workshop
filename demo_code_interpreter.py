@@ -1,11 +1,12 @@
-from python_code_interpreter_tool import PythonExecTool
+import os
+
 from dotenv import load_dotenv
+load_dotenv(".env", override=True)
+
+from python_code_interpreter_tool import PythonExecTool
 from openai import OpenAI
 import requests
 import json
-import os
-
-load_dotenv(".env", override=True)
 
 openai_api_key = os.getenv("OPENAI_API_KEY")
 

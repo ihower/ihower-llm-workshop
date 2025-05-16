@@ -3,7 +3,11 @@ import json
 from pprint import pp
 
 import os
-openai_api_key = os.environ.get("OPENAI_API_KEY", "sk-proj-1234567890")
+
+from dotenv import load_dotenv
+load_dotenv(".env", override=True)
+
+openai_api_key = os.getenv("OPENAI_API_KEY")
 
 def get_completion(messages, model="gpt-4o-mini", temperature=0, max_tokens=600, format_type=None):
   payload = { "model": model, "temperature": temperature, "messages": messages, "max_tokens": max_tokens }

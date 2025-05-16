@@ -1,4 +1,8 @@
 import os
+
+from dotenv import load_dotenv
+load_dotenv(".env", override=True)
+
 from typing import List
 from pydantic import Field, BaseModel, ConfigDict
 from openai import OpenAI

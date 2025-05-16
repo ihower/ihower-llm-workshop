@@ -1,4 +1,8 @@
 import os
+
+from dotenv import load_dotenv
+load_dotenv(".env", override=True)
+
 from braintrust import Eval, init_dataset
 
 from my_app import classify_book

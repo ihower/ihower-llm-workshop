@@ -1,8 +1,13 @@
 import os
+
+from dotenv import load_dotenv
+load_dotenv(".env", override=True)
+
 import requests
 import csv
 import io
 from braintrust import init_dataset
+
 
 dataset = init_dataset(project="Course-202504", name="books-107")
 

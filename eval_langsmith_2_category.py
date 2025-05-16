@@ -1,3 +1,6 @@
+from dotenv import load_dotenv
+load_dotenv(".env", override=True)
+
 from langsmith import Client
 from my_app import classify_book
 client = Client()

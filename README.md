@@ -8,6 +8,8 @@ uv sync
 source .venv/bin/activate
 ```
 
+複製 .env.example 至 .env 然後分別加上 API Key
+
 ## Prompt Engineering Example 1
 
 ```
