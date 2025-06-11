@@ -21,12 +21,13 @@ def get_completion(messages, model="gpt-4o-mini", temperature=0, max_tokens=600,
     return obj["choices"][0]["message"]["content"]
   else :
     return obj["error"]
-  
-def classify_book(name, description):
-  messages = [
-    {
-      "role": "system",
-      "content": """You are tasked with categorizing a book based on its information. Your goal is to select the most appropriate skill category from a predefined list.
+
+prompt1 = """請根據書籍資訊，從以下類別中選出最符合主題的一項，僅輸出類別名稱:
+<category>
+程式語言, Data Science, 人工智慧, 分散式架構, 系統開發, 行動軟體開發, 資料庫, 資訊科學, 軟體架構, 軟體測試, 軟體工程, 資訊安全, 網站開發, 前端開發, 架站軟體, 網頁設計, Adobe 軟體應用, Office 系列, 遊戲開發設計, UI/UX, 雲端運算, 區塊鏈與金融科技, 物聯網 IoT, 商業管理類, 電子電路電機類, 嵌入式系統, 視覺影音設計, 考試認證, 數學, 微軟技術, MAC OS 蘋果電腦, 其他, 兒童專區, 製圖軟體應用, 語言學習, 國家考試, 職涯發展, Java, 理工類, 網路通訊, 量子電腦
+</category>"""
+
+prompt2 = """You are tasked with categorizing a book based on its information. Your goal is to select the most appropriate skill category from a predefined list.
 Here is the list of available categories to choose from:
 <category>
 程式語言, Data Science, 人工智慧, 分散式架構, 系統開發, 行動軟體開發, 資料庫, 資訊科學, 軟體架構, 軟體測試, 軟體工程, 資訊安全, 網站開發, 前端開發, 架站軟體, 網頁設計, Adobe 軟體應用, Office 系列, 遊戲開發設計, UI/UX, 雲端運算, 區塊鏈與金融科技, 物聯網 IoT, 商業管理類, 電子電路電機類, 嵌入式系統, 視覺影音設計, 考試認證, 數學, 微軟技術, MAC OS 蘋果電腦, 其他, 兒童專區, 製圖軟體應用, 語言學習, 國家考試, 職涯發展, Java, 理工類, 網路通訊, 量子電腦
@@ -34,18 +35,24 @@ Here is the list of available categories to choose from:
 Analyze the book information and determine which category best fits the content and subject matter of the book. Consider the main topics, technologies, or skills covered in the book when making your decision.
 Choose only one category that most accurately represents the book's primary focus. Do not select multiple categories or create new ones.
 Provide your answer by outputting only the chosen category name, without any additional text or explanation. Your response should consist solely of the category name.
-Remember to choose the most appropriate category based on the book information provided.""" 
+Remember to choose the most appropriate category based on the book information provided."""
+
+def classify_book(name, description):
+  messages = [
+    {
+      "role": "system",
+      "content": prompt2
     },
     {
       "role": "user",
       "content": f"書名: {name} \n 描述: {description}"
     }
   ]
-  response = get_completion(messages, model="gpt-4o-mini")
+  response = get_completion(messages, model="gpt-4.1-mini")
   return response
 
 
-def recommend_book(name, description, model="gpt-4o-mini"):
+def recommend_book(name, description, model="gpt-4.1-mini"):
   messages = [
     {
       "role": "system",
