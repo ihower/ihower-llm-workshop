@@ -56,6 +56,7 @@ Open
 http://localhost:8000/static/completion.html
 http://localhost:8000/static/structured_output.html
 http://localhost:8000/static/agent.html
+http://localhost:8000/static/agent_v2.html
 ```
 
 

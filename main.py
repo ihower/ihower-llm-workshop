@@ -213,3 +213,90 @@ async def generate_agent_stream(query: str, previous_response_id: str = None, tr
 
 
 
+## V2 版本: 增強 Context Engineering
+
+from agents import SQLiteSession
+
+@app.get("/api/v2/agent_stream")
+async def get_agent_stream_v2(query: str, thread_id: str):
+    response = StreamingResponse(generate_agent_stream_v2(query, thread_id), media_type="text/event-stream")
+    response.headers["X-Accel-Buffering"] = "no"
+    return response
+
+async def generate_agent_stream_v2(query: str, thread_id: str):
+    session = SQLiteSession(thread_id, "conversations.db")
+
+    today = datetime.now().strftime("%Y-%m-%d")
+    
+    agent = Agent(
+        name="QA Agent",
+        instructions= f"""You are a helpful assistant that can answer questions and help with tasks. Always respond in Traditional Chinese. Today's date is {today}.""",
+        tools=[web_search],
+        model="gpt-5-mini",
+        output_type=QueryResult,
+        model_settings=ModelSettings(
+            reasoning = {
+                "effort": "low",
+                "summary": "auto"
+            }
+        )
+    )
+    print(f"thread_id: {thread_id}")
+
+    with trace("FastAPI Agent", trace_id=f"trace_{thread_id}"):
+        result = Runner.run_streamed(agent, input=query, session=session)
+
+    json_str = ''
+    previous_content = ''
+
+    async for event in result.stream_events():
+        print(event)
+        if event.type == "raw_response_event" and event.data.type == "response.output_text.delta":
+            print(event.data.delta)
+
+            json_str += event.data.delta
+            try:
+                result = jiter.from_json(json_str.encode('utf-8'), partial_mode="trailing-strings")
+                
+                if "content" in result:
+                    current_content = result["content"]
+                    if current_content != previous_content:
+                        result["content"] = current_content[len(previous_content):]
+                        previous_content = current_content
+                    elif current_content == previous_content:
+                        result["content"] = ''
+                    
+                yield f"data: {json.dumps(result)}\n\n"
+            except ValueError:
+                # JSON 還不完整，繼續等待更多數據
+                pass
+        elif event.type == "raw_response_event" and event.data.type == "response.output_item.added" and event.data.item.type == "reasoning":
+            think_chunk = {
+                "message": "THINK_START",
+            }
+            yield f"data: {json.dumps(think_chunk)}\n\n"                                   
+        elif event.type == "raw_response_event"  and event.data.type == "response.reasoning_summary_text.done":
+            think_chunk = {
+                "message": "THINK_TEXT",
+                "text": event.data.text
+            }
+            yield f"data: {json.dumps(think_chunk)}\n\n"   
+        elif event.type == "raw_response_event" and event.data.type == "response.completed":
+            print(f"last_response_id: {event.data}")
+            last_response_id = event.data.response.id
+        elif event.type == "run_item_stream_event":
+            if event.item.type == "tool_call_item":
+                print("-- Tool was called")
+                yield f"data: {json.dumps({'message': 'CALL_TOOL', 'tool_name': str(event.item.raw_item.name), 'arguments': str(event.item.raw_item.arguments)})}\n\n"
+            elif event.item.type == "tool_call_output_item":
+                print(f"-- Tool output: {event.item.output}")
+            elif event.item.type == "message_output_item":
+                print(f"-- Message output:\n {ItemHelpers.text_message_output(event.item)}")                
+            else:
+                pass  # Ignore other event types            
+
+    done_event = { "message": "DONE", "last_response_id": last_response_id }
+    yield f"data: {json.dumps(done_event)}\n\n"    
+
+
+
