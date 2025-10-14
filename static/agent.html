@@ -110,6 +110,25 @@
             font-weight: bold;
             margin-bottom: 5px;
         }
+        .thinking-block {
+            margin: 10px 0;
+            padding: 12px;
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            border-radius: 5px;
+            font-style: italic;
+            color: #856404;
+        }
+        .thinking-indicator {
+            color: #856404;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .thinking-text {
+            margin-top: 5px;
+            white-space: pre-wrap;
+            line-height: 1.4;
+        }
     </style>
 </head>
 <body>
@@ -185,28 +204,68 @@
             }
             
             const eventSource = new EventSource(apiUrl);
-            
+
+            let thinkingBlocksContainer = null;
+            let contentDiv = null;
+
             eventSource.onmessage = function(event) {
                 loadingDiv.style.display = 'none';
-                
+
                 const jsonData = JSON.parse(event.data);
-                
+
                 if (jsonData.message === "DONE") {
                     lastResponseId = jsonData.last_response_id;
                     eventSource.close();
                     return;
                 }
-                
-                if (jsonData.message === "CALL_TOOL") {
+
+                if (jsonData.message === "THINK_START") {
+                    // 創建思考區域容器（如果還沒有的話）
+                    if (!thinkingBlocksContainer) {
+                        thinkingBlocksContainer = document.createElement('div');
+                        aiMessageDiv.appendChild(thinkingBlocksContainer);
+                    }
+
+                    const thinkingIndicator = document.createElement('div');
+                    thinkingIndicator.className = 'thinking-block';
+                    thinkingIndicator.innerHTML = '<div class="thinking-indicator">💭 進行思考</div>';
+                    thinkingBlocksContainer.appendChild(thinkingIndicator);
+                } else if (jsonData.message === "THINK_TEXT") {
+                    // 添加思考內容區塊
+                    if (!thinkingBlocksContainer) {
+                        thinkingBlocksContainer = document.createElement('div');
+                        aiMessageDiv.appendChild(thinkingBlocksContainer);
+                    }
+
+                    const thinkingTextBlock = document.createElement('div');
+                    thinkingTextBlock.className = 'thinking-block';
+                    thinkingTextBlock.innerHTML = `
+                        <div class="thinking-indicator">🧠 思考摘要：</div>
+                        <div class="thinking-text">${jsonData.text}</div>
+                    `;
+                    thinkingBlocksContainer.appendChild(thinkingTextBlock);
+                } else if (jsonData.message === "CALL_TOOL") {
+                    // 創建主文內容區塊（如果還沒有的話）
+                    if (!contentDiv) {
+                        contentDiv = document.createElement('div');
+                        contentDiv.style.marginTop = '10px';
+                        aiMessageDiv.appendChild(contentDiv);
+                    }
+
                     const toolMessage = `<span style="color: #666; font-style: italic; margin: 5px 0; padding: 8px; border: 1px dashed #999; border-radius: 5px; display: block;">🔧 執行工具: ${jsonData.tool_name} 參數 ${jsonData.arguments} ⚙️</span>`;
-                    const currentContent = aiMessageDiv.innerHTML.split('</div>')[1] || '';
-                    aiMessageDiv.innerHTML = `<div class="message-label">AI:</div>${currentContent}${toolMessage}`;
+                    contentDiv.innerHTML += toolMessage;
                 } else if (jsonData.content) {
-                    const currentContent = aiMessageDiv.innerHTML.split('</div>')[1] || '';
-                    aiMessageDiv.innerHTML = `<div class="message-label">AI:</div>${currentContent}${jsonData.content}`;
+                    // 創建主文內容區塊（如果還沒有的話）
+                    if (!contentDiv) {
+                        contentDiv = document.createElement('div');
+                        contentDiv.style.marginTop = '10px';
+                        aiMessageDiv.appendChild(contentDiv);
+                    }
+
+                    contentDiv.innerHTML += jsonData.content;
                 } else if (jsonData.following_questions) {
                     responseQuestionsDiv.innerHTML = '';
-                    
+
                     const questionsDiv = document.createElement('div');
                     questionsDiv.className = 'following-questions';
                     questionsDiv.innerHTML = `<h3>相關問題：</h3>
@@ -214,7 +273,7 @@
                             ${jsonData.following_questions.map(q => `<li>${q}</li>`).join('')}
                         </ul>`;
                     responseQuestionsDiv.appendChild(questionsDiv);
-                    
+
                     const questionItems = questionsDiv.querySelectorAll('li');
                     questionItems.forEach(item => {
                         item.addEventListener('click', function() {
@@ -224,7 +283,7 @@
                         });
                     });
                 }
-                
+
                 responseContentDiv.scrollTop = responseContentDiv.scrollHeight;
             };
             

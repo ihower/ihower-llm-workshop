@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from openai.types.shared import reasoning
 from pydantic import BaseModel, Field
 import json
 import jiter
@@ -111,7 +112,7 @@ async def generate_completion_json_stream(query: str):
  
 
 ## Chat Agent + Streaming + Structured Output
-from agents import Agent, Runner, set_default_openai_key, function_tool, trace, ItemHelpers
+from agents import Agent, Runner, set_default_openai_key, function_tool, trace, ItemHelpers, ModelSettings
 from openai.types.responses import ResponseTextDeltaEvent, ResponseCompletedEvent
 
 from tavily import TavilyClient
@@ -144,8 +145,14 @@ async def generate_agent_stream(query: str, previous_response_id: str = None, tr
         name="QA Agent",
         instructions= f"""You are a helpful assistant that can answer questions and help with tasks. Always respond in Traditional Chinese. Today's date is {today}.""",
         tools=[web_search],
-        model="gpt-4.1-mini",
-        output_type=QueryResult
+        model="gpt-5-mini",
+        output_type=QueryResult,
+        model_settings=ModelSettings(
+            reasoning = {
+                "effort": "low",
+                "summary": "auto"
+            }
+        )
     )
     print(f"previous_response_id: {previous_response_id}")
 
@@ -157,7 +164,7 @@ async def generate_agent_stream(query: str, previous_response_id: str = None, tr
 
     async for event in result.stream_events():
         print(event)
-        if event.type == "raw_response_event" and isinstance(event.data, ResponseTextDeltaEvent):
+        if event.type == "raw_response_event" and event.data.type == "response.output_text.delta":
             print(event.data.delta)
 
             json_str += event.data.delta
@@ -176,7 +183,18 @@ async def generate_agent_stream(query: str, previous_response_id: str = None, tr
             except ValueError:
                 # JSON 還不完整，繼續等待更多數據
                 pass
-        elif event.type == "raw_response_event" and isinstance(event.data, ResponseCompletedEvent):
+        elif event.type == "raw_response_event" and event.data.type == "response.output_item.added" and event.data.item.type == "reasoning":
+            think_chunk = {
+                "message": "THINK_START",
+            }
+            yield f"data: {json.dumps(think_chunk)}\n\n"                                   
+        elif event.type == "raw_response_event"  and event.data.type == "response.reasoning_summary_text.done":
+            think_chunk = {
+                "message": "THINK_TEXT",
+                "text": event.data.text
+            }
+            yield f"data: {json.dumps(think_chunk)}\n\n"   
+        elif event.type == "raw_response_event" and event.data.type == "response.completed":
             print(f"last_response_id: {event.data}")
             last_response_id = event.data.response.id
         elif event.type == "run_item_stream_event":
