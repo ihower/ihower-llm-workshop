@@ -1,3 +1,5 @@
+此為 https://aihao.tw/llm 課程的 Example code
+
 ## Setup
 
 請先安裝 uv https://github.com/astral-sh/uv
@@ -10,7 +12,19 @@ source .venv/bin/activate
 
 複製 .env.example 至 .env 然後分別加上 API Key
 
-## Prompt Engineering Example 1
+## Prompt Engineering Example (Braintrust)
+
+https://www.braintrust.dev/
+
+```
+python eval_braintrust_1_dataset.py
+python eval_braintrust_2_category.py
+python eval_braintrust_2_recommend.py
+```
+
+## Prompt Engineering Example (LangSmith)
+
+https://www.langchain.com/langsmith/
 
 ```
 python eval_langsmith_1_dataset.py
@@ -19,15 +33,7 @@ python eval_langsmith_2_recommend.py
 python eval_langsmith_2_recommend_openevals.py
 ```
 
-## Prompt Engineering Example 2
-
-```
-python eval_braintrust_1_dataset.py
-python eval_braintrust_2_category.py
-python eval_braintrust_2_recommend.py
-```
-
-## Prompt Engineering Example 3
+## Prompt Engineering Example (Promptfoo)
 
 安裝 https://www.promptfoo.dev/
 
