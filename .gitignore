@@ -11,3 +11,4 @@ wheels/
 .env
 .DS_Store
 conversations.db*
+advanced_conversations.db*

@@ -169,17 +169,17 @@ async def generate_agent_stream(query: str, previous_response_id: str = None, tr
 
             json_str += event.data.delta
             try:
-                result = jiter.from_json(json_str.encode('utf-8'), partial_mode="trailing-strings")
+                parsed_data = jiter.from_json(json_str.encode('utf-8'), partial_mode="trailing-strings")
                 
-                if "content" in result:
-                    current_content = result["content"]
+                if "content" in parsed_data:
+                    current_content = parsed_data["content"]
                     if current_content != previous_content:
-                        result["content"] = current_content[len(previous_content):]
+                        parsed_data["content"] = current_content[len(previous_content):]
                         previous_content = current_content
                     elif current_content == previous_content:
-                        result["content"] = ''
+                        parsed_data["content"] = ''
                     
-                yield f"data: {json.dumps(result)}\n\n"
+                yield f"data: {json.dumps(parsed_data)}\n\n"
             except ValueError:
                 # JSON 還不完整，繼續等待更多數據
                 pass
@@ -215,6 +215,7 @@ async def generate_agent_stream(query: str, previous_response_id: str = None, tr
 
 ## V2 版本: 增強 Context Engineering
 from agents import SQLiteSession
+from agents.extensions.memory import AdvancedSQLiteSession
 from custom_sqlite_session import CustomSQLiteSession
 
 @app.get("/api/v2/agent_stream")
@@ -226,7 +227,8 @@ async def get_agent_stream_v2(query: str, thread_id: str):
 async def generate_agent_stream_v2(query: str, thread_id: str):
 
     # session = SQLiteSession(thread_id, "conversations.db")
-    session = CustomSQLiteSession(thread_id, "conversations.db")
+    # session = CustomSQLiteSession(thread_id, "conversations.db")
+    session = AdvancedSQLiteSession(session_id=thread_id, create_tables=True, db_path="advanced_conversations.db")
 
     current_items = await session.get_items()
     print(f"current_items_count: {len(current_items)}")
@@ -261,17 +263,17 @@ async def generate_agent_stream_v2(query: str, thread_id: str):
 
             json_str += event.data.delta
             try:
-                result = jiter.from_json(json_str.encode('utf-8'), partial_mode="trailing-strings")
+                parsed_data = jiter.from_json(json_str.encode('utf-8'), partial_mode="trailing-strings")
                 
-                if "content" in result:
-                    current_content = result["content"]
+                if "content" in parsed_data:
+                    current_content = parsed_data["content"]
                     if current_content != previous_content:
-                        result["content"] = current_content[len(previous_content):]
+                        parsed_data["content"] = current_content[len(previous_content):]
                         previous_content = current_content
                     elif current_content == previous_content:
-                        result["content"] = ''
+                        parsed_data["content"] = ''
                     
-                yield f"data: {json.dumps(result)}\n\n"
+                yield f"data: {json.dumps(parsed_data)}\n\n"
             except ValueError:
                 # JSON 還不完整，繼續等待更多數據
                 pass
@@ -301,7 +303,10 @@ async def generate_agent_stream_v2(query: str, thread_id: str):
                 pass  # Ignore other event types            
 
     done_event = { "message": "DONE", "last_response_id": last_response_id }
-    yield f"data: {json.dumps(done_event)}\n\n"    
+    yield f"data: {json.dumps(done_event)}\n\n"
+
+    print(f"result: {result.context_wrapper}")
+    await session.store_run_usage(result)
 
 
 
