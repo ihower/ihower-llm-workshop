@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat 介面</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -129,6 +130,77 @@
             white-space: pre-wrap;
             line-height: 1.4;
         }
+        /* Markdown 渲染樣式 */
+        .markdown-content {
+            line-height: 1.6;
+        }
+        .markdown-content h1, .markdown-content h2, .markdown-content h3 {
+            margin-top: 16px;
+            margin-bottom: 8px;
+        }
+        .markdown-content h1 {
+            font-size: 1.8em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+        .markdown-content h2 {
+            font-size: 1.5em;
+        }
+        .markdown-content h3 {
+            font-size: 1.2em;
+        }
+        .markdown-content code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        .markdown-content pre {
+            background-color: #f4f4f4;
+            padding: 12px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        .markdown-content pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+        .markdown-content ul, .markdown-content ol {
+            padding-left: 25px;
+            margin: 10px 0;
+        }
+        .markdown-content li {
+            margin-bottom: 5px;
+        }
+        .markdown-content blockquote {
+            border-left: 4px solid #ccc;
+            padding-left: 15px;
+            margin: 10px 0;
+            color: #666;
+        }
+        .markdown-content a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        .markdown-content a:hover {
+            text-decoration: underline;
+        }
+        .markdown-content table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 10px 0;
+        }
+        .markdown-content th, .markdown-content td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .markdown-content th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -239,9 +311,13 @@
 
                     const thinkingTextBlock = document.createElement('div');
                     thinkingTextBlock.className = 'thinking-block';
+
+                    // 渲染 markdown
+                    const renderedThinkText = marked.parse(jsonData.text);
+
                     thinkingTextBlock.innerHTML = `
                         <div class="thinking-indicator">🧠 思考摘要：</div>
-                        <div class="thinking-text">${jsonData.text}</div>
+                        <div class="thinking-text markdown-content">${renderedThinkText}</div>
                     `;
                     thinkingBlocksContainer.appendChild(thinkingTextBlock);
                 } else if (jsonData.message === "CALL_TOOL") {
@@ -258,11 +334,17 @@
                     // 創建主文內容區塊（如果還沒有的話）
                     if (!contentDiv) {
                         contentDiv = document.createElement('div');
+                        contentDiv.className = 'markdown-content';
                         contentDiv.style.marginTop = '10px';
                         aiMessageDiv.appendChild(contentDiv);
                     }
 
-                    contentDiv.innerHTML += jsonData.content;
+                    // 累積 markdown 內容並重新渲染
+                    if (!contentDiv.markdownBuffer) {
+                        contentDiv.markdownBuffer = '';
+                    }
+                    contentDiv.markdownBuffer += jsonData.content;
+                    contentDiv.innerHTML = marked.parse(contentDiv.markdownBuffer);
                 } else if (jsonData.following_questions) {
                     responseQuestionsDiv.innerHTML = '';
 
