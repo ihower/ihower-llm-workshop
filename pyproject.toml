@@ -19,4 +19,5 @@ dependencies = [
     "mcp[cli]>=1.7.1",
     "smolagents[toolkit]>=1.15.0",
     "litellm>=1.68.1",
+    "tiktoken>=0.12.0",
 ]
