@@ -214,8 +214,8 @@ async def generate_agent_stream(query: str, previous_response_id: str = None, tr
 
 
 ## V2 版本: 增強 Context Engineering
-
 from agents import SQLiteSession
+from custom_sqlite_session import CustomSQLiteSession
 
 @app.get("/api/v2/agent_stream")
 async def get_agent_stream_v2(query: str, thread_id: str):
@@ -224,7 +224,12 @@ async def get_agent_stream_v2(query: str, thread_id: str):
     return response
 
 async def generate_agent_stream_v2(query: str, thread_id: str):
-    session = SQLiteSession(thread_id, "conversations.db")
+
+    # session = SQLiteSession(thread_id, "conversations.db")
+    session = CustomSQLiteSession(thread_id, "conversations.db")
+
+    current_items = await session.get_items()
+    print(f"current_items_count: {len(current_items)}")
 
     today = datetime.now().strftime("%Y-%m-%d")
     
