@@ -19,9 +19,14 @@ def num_tokens_from_messages(messages, model="gpt-5"):
                         for k3, v3 in v2.items():
                             if k3 == "text":
                                 num_tokens += len(encoding.encode(str(v3)))
+                            elif k3 == 'annotations': # 內建的 web search
+                                for v4 in v3:
+                                    for k5, v5 in v4.items():
+                                        if k5 == "title" or k5 == "url":
+                                            num_tokens += len(encoding.encode(str(v5)))
                 else:
                     num_tokens += len(encoding.encode(str(value)))
-            elif key in ("output", "arguments", "role"):
+            elif key in ("output", "arguments", "role", "action", "type"):
                 num_tokens += len(encoding.encode(str(value)))
             else:
                 pass
@@ -45,6 +50,9 @@ def num_tokens_for_tools(functions, messages, model="gpt-5"):
     func_token_count = 0
     if len(functions) > 0:
         for x in functions:
+            if x["type"] != "function": # 不支援內建工具的計算
+                continue
+            
             f = {
                "type": "function",
                "function": x
@@ -91,6 +99,8 @@ async def num_tokens_for_agent_items(agent, messages, model="gpt-5"):
 
     converted = Converter.convert_tools(tools, agent.handoffs).tools
 
+    #print(f"converted: {converted}")
+    
     return num_tokens_for_tools(converted, messages)
 
 # Test real usage
@@ -107,7 +117,7 @@ if __name__ == "__main__":
 
         client = OpenAI()
 
-        from agents import Agent, function_tool, Runner
+        from agents import Agent, function_tool, Runner, WebSearchTool, ModelSettings
         
         @function_tool # (description_override="Call this tool to search the web")
         async def web_search(query: str) -> str:
@@ -125,13 +135,16 @@ if __name__ == "__main__":
             name="Test Agent",
         # instructions= f"hi",
             tools=[web_search],
-            model="gpt-4.1-mini"
+            model="gpt-4.1-mini",
+            #model_settings=ModelSettings(
+            #      include=["web_search_call.action.sources"],
+            #)
         )
 
         print("--------------Round 1--------------")
         messages = [
             { "role": "developer", "content": "hi" },
-            { "role": "user", "content": "call web_search for ihower" },
+            { "role": "user", "content": "call web_search for ihower, then search AIHAO.tw" },
         # { "role": "assistant", "content": "fine" },
         # { "role": "user", "content": "yo" },
         ]
