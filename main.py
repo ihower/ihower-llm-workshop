@@ -115,21 +115,20 @@ async def generate_completion_json_stream(query: str):
 from agents import Agent, Runner, set_default_openai_key, function_tool, trace, ItemHelpers, ModelSettings
 from openai.types.responses import ResponseTextDeltaEvent, ResponseCompletedEvent
 
-from tavily import TavilyClient
+from tavily import AsyncTavilyClient
 
-tavily_client = TavilyClient()
+tavily_client = AsyncTavilyClient()
 
 @function_tool
-def web_search(query: str) -> str:
+async def web_search(query: str) -> str:
     """Search the web for information"""
-    return tavily_client.search(query)
+    print(f"  ⚙️ 呼叫函式 web_search 參數: {query}")
 
-@function_tool
-def web_search(query: str):
-  """Call this function when recent data is required to perform a web search"""
-  print(f"  ⚙️ 呼叫函式 web_search 參數: {query}")
-  response = tavily_client.search(query)
-  return str(response)
+    result = await tavily_client.search(query)
+
+    print(f"  ⚙️ 呼叫函式 web_search 結果: {result}")
+
+    return result
 
 
 @app.get("/api/v1/agent_stream")
@@ -161,6 +160,7 @@ async def generate_agent_stream(query: str, previous_response_id: str = None, tr
 
     json_str = ''
     previous_content = ''
+    last_response_id = None
 
     async for event in result.stream_events():
         print(event)
@@ -255,7 +255,8 @@ async def generate_agent_stream_v2(query: str, thread_id: str):
 
     json_str = ''
     previous_content = ''
-
+    last_response_id = None
+    
     async for event in result.stream_events():
         #print(event)
         if event.type == "raw_response_event" and event.data.type == "response.output_text.delta":
