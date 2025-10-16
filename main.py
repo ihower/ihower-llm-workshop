@@ -8,6 +8,7 @@ from openai.types.shared import reasoning
 from pydantic import BaseModel, Field
 import json
 import jiter
+import asyncio
 from datetime import datetime
 
 from dotenv import load_dotenv
@@ -289,7 +290,7 @@ async def generate_agent_stream_v2(query: str, thread_id: str):
     custom_agent_context = CustomAgentContext(search_source={})
 
 
-    with trace("FastAPI Agent", trace_id=f"trace_{thread_id}"):
+    with trace("FastAPI Agent v2", trace_id=f"trace_{thread_id}"):
         result = Runner.run_streamed(agent, input=query, session=session, context=custom_agent_context)
 
     json_str = ''
@@ -354,10 +355,12 @@ async def generate_agent_stream_v2(query: str, thread_id: str):
     print(f"search_source: {result.context_wrapper.context.search_source}")
 
 
-
 class GuardrailResult(BaseModel):
     is_investment_question: bool
     refusal_answer: str = Field(description="The answer to the user's question if is_investment_question is False, otherwise leave it blank. ")
+
+class ExtractFollowupQuestionsResult(BaseModel):
+    followup_questions: list[str] = Field(description="3 follow-up questions exploring different aspects of the topic.")
 
 @app.get("/api/v3/agent_stream")
 async def get_agent_stream_v3(query: str, thread_id: str):
@@ -376,12 +379,18 @@ async def generate_agent_stream_v3(query: str, thread_id: str):
         output_type=GuardrailResult,
     )
 
+    extract_followup_questions_agent = Agent(
+        name="Extract Followup Questions Agent",
+        instructions= f"""你的任務是從用戶的問題中提取出3個 follow-up questions，並且返回 "followup_questions": ["問題1", "問題2", "問題3"]。""",
+        model="gpt-4.1",
+        output_type=ExtractFollowupQuestionsResult,
+    )
+
     agent = Agent[CustomAgentContext](
         name="QA Agent",
         instructions= f"""You are a helpful assistant that can answer questions and help with tasks. Always respond in Traditional Chinese. Today's date is {today}.""",
         tools=[knowledge_search],
         model="gpt-5-mini",
-        output_type=QueryResult,
         model_settings=ModelSettings(
             reasoning = {
                 "effort": "low",
@@ -397,14 +406,16 @@ async def generate_agent_stream_v3(query: str, thread_id: str):
 
     custom_agent_context = CustomAgentContext(search_source={})
 
-
-    with trace("FastAPI Agent", trace_id=f"trace_{thread_id}"):
+    with trace("FastAPI Agent v3", trace_id=f"trace_{thread_id}"):
         result = await Runner.run(guardrail_agent, input=query)
 
         if not result.final_output.is_investment_question:
             content = { "content": result.final_output.refusal_answer }
             yield f"data: {json.dumps(content)}\n\n"
         else:
+
+            follow_up_questions_task = asyncio.create_task(  Runner.run(extract_followup_questions_agent, input=query, session=session) )
+
             result = Runner.run_streamed(agent, input=query, session=session, context=custom_agent_context)
 
             json_str = ''
@@ -415,23 +426,9 @@ async def generate_agent_stream_v3(query: str, thread_id: str):
                 #print(event)
                 if event.type == "raw_response_event" and event.data.type == "response.output_text.delta":
                     #print(event.data.delta)
+                    data = { "content": event.data.delta }
+                    yield f"data: {json.dumps(data)}\n\n"
 
-                    json_str += event.data.delta
-                    try:
-                        parsed_data = jiter.from_json(json_str.encode('utf-8'), partial_mode="trailing-strings")
-                        
-                        if "content" in parsed_data:
-                            current_content = parsed_data["content"]
-                            if current_content != previous_content:
-                                parsed_data["content"] = current_content[len(previous_content):]
-                                previous_content = current_content
-                            elif current_content == previous_content:
-                                parsed_data["content"] = ''
-                            
-                        yield f"data: {json.dumps(parsed_data)}\n\n"
-                    except ValueError:
-                        # JSON 還不完整，繼續等待更多數據
-                        pass
                 elif event.type == "raw_response_event" and event.data.type == "response.output_item.added" and event.data.item.type == "reasoning":
                     think_chunk = {
                         "message": "THINK_START",
@@ -446,6 +443,13 @@ async def generate_agent_stream_v3(query: str, thread_id: str):
                 elif event.type == "raw_response_event" and event.data.type == "response.completed":
                     print(f"last_response_id: {event.data}")
                     last_response_id = event.data.response.id
+
+                    follow_up_questions_result = await follow_up_questions_task
+                    questions = follow_up_questions_result.final_output_as(ExtractFollowupQuestionsResult).followup_questions
+                    data = { "following_questions": questions }
+
+                    yield f"data: {json.dumps(data)}\n\n"
+
                 elif event.type == "run_item_stream_event":
                     if event.item.type == "tool_call_item":
                         print("-- Tool was called")
