@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 import os
 from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
@@ -121,12 +122,18 @@ tavily_client = AsyncTavilyClient()
 
 @function_tool
 async def web_search(query: str) -> str:
-    """Search the web for information"""
+    """
+    Search the web for information
+
+    Args:
+        query: The query keyword to search the web for.        
+    """
+    
     print(f"  ⚙️ 呼叫函式 web_search 參數: {query}")
 
-    result = await tavily_client.search(query)
+    response = await tavily_client.search(query)
 
-    print(f"  ⚙️ 呼叫函式 web_search 結果: {result}")
+    print(f"  ⚙️ 呼叫函式 web_search 結果: {response}")
 
     return result
 
@@ -212,6 +219,35 @@ async def generate_agent_stream(query: str, previous_response_id: str = None, tr
     yield f"data: {json.dumps(done_event)}\n\n"    
 
 
+# 加上 context 參數 https://openai.github.io/openai-agents-python/context/
+from agents import RunContextWrapper
+
+@dataclass
+class CustomAgentContext:
+  search_source: dict
+
+
+@function_tool
+async def knowledge_search(wrapper: RunContextWrapper[CustomAgentContext], query: str) -> str:
+    """
+    Search the web for information
+
+    Args:
+        query: The query keyword to search the web for.        
+    """
+    
+    print(f"  ⚙️ 呼叫函式 web_search 參數: {query}")
+
+    response = await tavily_client.search(query)
+
+    wrapper.context.search_source[query] = response
+
+    result = [ x["content"] for x in response["results"] ]
+
+    print(f"  ⚙️ 呼叫函式 web_search 結果: {result}")
+
+    return str(result)
+
 
 ## V2 版本: 增強 Context Engineering
 from agents import SQLiteSession
@@ -231,10 +267,10 @@ async def generate_agent_stream_v2(query: str, thread_id: str):
 
     today = datetime.now().strftime("%Y-%m-%d")
     
-    agent = Agent(
+    agent = Agent[CustomAgentContext](
         name="QA Agent",
         instructions= f"""You are a helpful assistant that can answer questions and help with tasks. Always respond in Traditional Chinese. Today's date is {today}.""",
-        tools=[web_search],
+        tools=[knowledge_search],
         model="gpt-5-mini",
         output_type=QueryResult,
         model_settings=ModelSettings(
@@ -250,13 +286,16 @@ async def generate_agent_stream_v2(query: str, thread_id: str):
     current_items = await session.get_items()
     print(f"current_items_count: {len(current_items)}")
 
+    custom_agent_context = CustomAgentContext(search_source={})
+
+
     with trace("FastAPI Agent", trace_id=f"trace_{thread_id}"):
-        result = Runner.run_streamed(agent, input=query, session=session)
+        result = Runner.run_streamed(agent, input=query, session=session, context=custom_agent_context)
 
     json_str = ''
     previous_content = ''
     last_response_id = None
-    
+
     async for event in result.stream_events():
         #print(event)
         if event.type == "raw_response_event" and event.data.type == "response.output_text.delta":
@@ -298,6 +337,9 @@ async def generate_agent_stream_v2(query: str, thread_id: str):
                 yield f"data: {json.dumps({'message': 'CALL_TOOL', 'tool_name': str(event.item.raw_item.name), 'arguments': str(event.item.raw_item.arguments)})}\n\n"
             elif event.item.type == "tool_call_output_item":
                 print(f"-- Tool output: {event.item.output}")
+                
+                print(f"search_source: {result.context_wrapper.context.search_source}") # 也可以看到最新更新後的 context (這個沒有傳給 LLM，只是我們內部用)
+
             elif event.item.type == "message_output_item":
                 #print(f"-- Message output:\n {ItemHelpers.text_message_output(event.item)}")                
                 pass
@@ -308,5 +350,5 @@ async def generate_agent_stream_v2(query: str, thread_id: str):
     yield f"data: {json.dumps(done_event)}\n\n"
 
     print(f"result: {result.context_wrapper}")
-
-
+    print("--------------------------------")
+    print(f"search_source: {result.context_wrapper.context.search_source}")
