@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat 介面</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+        }
+        .container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+        .left-column {
+            flex: 1;
+            padding: 20px;
+            border-right: 1px solid #ccc;
+            display: flex;
+            flex-direction: column;
+        }
+        .right-column {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+        }
+        .chat-form {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        textarea {
+            height: 10em;
+            margin-bottom: 10px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: none;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+        .button-group button {
+            flex: 1;
+        }
+        .new-conversation-btn {
+            background-color: #2196F3;
+        }
+        .new-conversation-btn:hover {
+            background-color: #0b7dda;
+        }
+        #response {
+            white-space: pre-wrap;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .loading {
+            display: none;
+            margin-top: 10px;
+            color: #666;
+        }
+        .header {
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .following-questions {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f0f8ff;
+            border-radius: 8px;
+            border-left: 4px solid #4CAF50;
+        }
+        .following-questions h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .following-questions ul {
+            margin-bottom: 0;
+            padding-left: 20px;
+        }
+        .following-questions li {
+            margin-bottom: 8px;
+            cursor: pointer;
+            color: #0066cc;
+        }
+        .following-questions li:hover {
+            text-decoration: underline;
+        }
+        .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .user-message {
+            background-color: #e3f2fd;
+            margin-left: 20px;
+        }
+        .ai-message {
+            background-color: #f5f5f5;
+            margin-right: 20px;
+        }
+        .message-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .thinking-block {
+            margin: 10px 0;
+            padding: 12px;
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            border-radius: 5px;
+            font-style: italic;
+            color: #856404;
+        }
+        .thinking-indicator {
+            color: #856404;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .thinking-text {
+            margin-top: 5px;
+            white-space: pre-wrap;
+            line-height: 1.4;
+        }
+        /* Markdown 渲染樣式 */
+        .markdown-content {
+            line-height: 1.6;
+        }
+        .markdown-content h1, .markdown-content h2, .markdown-content h3 {
+            margin-top: 16px;
+            margin-bottom: 8px;
+        }
+        .markdown-content h1 {
+            font-size: 1.8em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+        .markdown-content h2 {
+            font-size: 1.5em;
+        }
+        .markdown-content h3 {
+            font-size: 1.2em;
+        }
+        .markdown-content code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        .markdown-content pre {
+            background-color: #f4f4f4;
+            padding: 12px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        .markdown-content pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+        .markdown-content ul, .markdown-content ol {
+            padding-left: 25px;
+            margin: 10px 0;
+        }
+        .markdown-content li {
+            margin-bottom: 5px;
+        }
+        .markdown-content blockquote {
+            border-left: 4px solid #ccc;
+            padding-left: 15px;
+            margin: 10px 0;
+            color: #666;
+        }
+        .markdown-content a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+        .markdown-content a:hover {
+            text-decoration: underline;
+        }
+        .markdown-content table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 10px 0;
+        }
+        .markdown-content th, .markdown-content td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .markdown-content th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-column">
+            <div class="header">
+                <h2>Agent 對話 (Chat 介面)</h2>
+            </div>
+            <form class="chat-form" id="chatForm">
+                <textarea id="query" placeholder="請輸入您的內容..."></textarea>
+                <div class="loading" id="loading">處理中...</div>
+                <div class="button-group">
+                    <button type="button" class="new-conversation-btn" id="newConversationBtn">開新對話</button>
+                    <button type="submit">送出</button>
+                </div>
+            </form>
+        </div>
+        <div class="right-column">
+            <div class="header">
+                <h2>回應內容</h2>
+            </div>
+            <div id="response_content"></div>
+            <div id="response_questions"></div>
+        </div>
+    </div>
+
+    <script>
+        // 生成唯一的 thread_id
+        function generateThreadId() {
+            const alphanumeric = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let randomPart = '';
+
+            // 生成 32 位隨機字母數字字符串
+            for (let i = 0; i < 32; i++) {
+                const randomIndex = Math.floor(Math.random() * alphanumeric.length);
+                randomPart += alphanumeric.charAt(randomIndex);
+            }
+
+            // 組合前綴和隨機部分
+            return randomPart;
+        }
+
+        // 初始化 thread_id
+        let threadId = generateThreadId();
+
+        console.log(`生成的 thread_id: ${threadId}`);
+        document.getElementById('chatForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const query = document.getElementById('query').value;
+            if (!query.trim()) return;
+
+            const responseContentDiv = document.getElementById('response_content');
+            const responseQuestionsDiv = document.getElementById('response_questions');
+            const loadingDiv = document.getElementById('loading');
+            const submitBtn = document.querySelector('button[type="submit"]');
+
+            // 禁用送出按鈕
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = '0.5';
+            submitBtn.style.cursor = 'not-allowed';
+
+            // 添加用戶訊息
+            const userMessageDiv = document.createElement('div');
+            userMessageDiv.className = 'message user-message';
+            userMessageDiv.innerHTML = `<div class="message-label">User:</div>${query}`;
+            responseContentDiv.appendChild(userMessageDiv);
+
+            // 創建 AI 訊息容器
+            const aiMessageDiv = document.createElement('div');
+            aiMessageDiv.className = 'message ai-message';
+            aiMessageDiv.innerHTML = '<div class="message-label">AI:</div>';
+            responseContentDiv.appendChild(aiMessageDiv);
+
+            loadingDiv.style.display = 'block';
+
+            let apiUrl = `/api/v3/agent_stream?query=${encodeURIComponent(query)}&thread_id=${threadId}`;
+
+            const eventSource = new EventSource(apiUrl);
+
+            let thinkingBlocksContainer = null;
+            let contentDiv = null;
+
+            eventSource.onmessage = function(event) {
+                loadingDiv.style.display = 'none';
+
+                const jsonData = JSON.parse(event.data);
+
+                if (jsonData.message === "DONE") {
+                    // 重新啟用送出按鈕
+                    submitBtn.disabled = false;
+                    submitBtn.style.opacity = '1';
+                    submitBtn.style.cursor = 'pointer';
+                    eventSource.close();
+                    return;
+                }
+
+                if (jsonData.message === "THINK_START") {
+                    // 創建思考區域容器（如果還沒有的話）
+                    if (!thinkingBlocksContainer) {
+                        thinkingBlocksContainer = document.createElement('div');
+                        aiMessageDiv.appendChild(thinkingBlocksContainer);
+                    }
+
+                    const thinkingIndicator = document.createElement('div');
+                    thinkingIndicator.className = 'thinking-block';
+                    thinkingIndicator.innerHTML = '<div class="thinking-indicator">💭 進行思考</div>';
+                    thinkingBlocksContainer.appendChild(thinkingIndicator);
+                } else if (jsonData.message === "THINK_TEXT") {
+                    // 添加思考內容區塊
+                    if (!thinkingBlocksContainer) {
+                        thinkingBlocksContainer = document.createElement('div');
+                        aiMessageDiv.appendChild(thinkingBlocksContainer);
+                    }
+
+                    const thinkingTextBlock = document.createElement('div');
+                    thinkingTextBlock.className = 'thinking-block';
+
+                    // 渲染 markdown
+                    const renderedThinkText = marked.parse(jsonData.text);
+
+                    thinkingTextBlock.innerHTML = `
+                        <div class="thinking-indicator">🧠 思考摘要：</div>
+                        <div class="thinking-text markdown-content">${renderedThinkText}</div>
+                    `;
+                    thinkingBlocksContainer.appendChild(thinkingTextBlock);
+                } else if (jsonData.message === "CALL_TOOL") {
+                    // 創建主文內容區塊（如果還沒有的話）
+                    if (!contentDiv) {
+                        contentDiv = document.createElement('div');
+                        contentDiv.style.marginTop = '10px';
+                        aiMessageDiv.appendChild(contentDiv);
+                    }
+
+                    const toolMessage = `<span style="color: #666; font-style: italic; margin: 5px 0; padding: 8px; border: 1px dashed #999; border-radius: 5px; display: block;">🔧 執行工具: ${jsonData.tool_name} 參數 ${jsonData.arguments} ⚙️</span>`;
+                    contentDiv.innerHTML += toolMessage;
+                } else if (jsonData.content) {
+                    // 創建主文內容區塊（如果還沒有的話）
+                    if (!contentDiv) {
+                        contentDiv = document.createElement('div');
+                        contentDiv.className = 'markdown-content';
+                        contentDiv.style.marginTop = '10px';
+                        aiMessageDiv.appendChild(contentDiv);
+                    }
+
+                    // 累積 markdown 內容並重新渲染
+                    if (!contentDiv.markdownBuffer) {
+                        contentDiv.markdownBuffer = '';
+                    }
+                    contentDiv.markdownBuffer += jsonData.content;
+                    contentDiv.innerHTML = marked.parse(contentDiv.markdownBuffer);
+                } else if (jsonData.following_questions) {
+                    responseQuestionsDiv.innerHTML = '';
+
+                    const questionsDiv = document.createElement('div');
+                    questionsDiv.className = 'following-questions';
+                    questionsDiv.innerHTML = `<h3>相關問題：</h3>
+                        <ul>
+                            ${jsonData.following_questions.map(q => `<li>${q}</li>`).join('')}
+                        </ul>`;
+                    responseQuestionsDiv.appendChild(questionsDiv);
+
+                    const questionItems = questionsDiv.querySelectorAll('li');
+                    questionItems.forEach(item => {
+                        item.addEventListener('click', function() {
+                            document.getElementById('query').value = this.textContent;
+                            document.getElementById('query').scrollIntoView();
+                            document.getElementById('query').focus();
+                        });
+                    });
+                }
+
+                responseContentDiv.scrollTop = responseContentDiv.scrollHeight;
+            };
+            
+            eventSource.onerror = function(error) {
+                console.error("SSE Error:", error);
+                loadingDiv.style.display = 'none';
+                // 重新啟用送出按鈕
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = '1';
+                submitBtn.style.cursor = 'pointer';
+                eventSource.close();
+            };
+
+            document.getElementById('query').value = '';
+        });
+
+        // 開新對話按鈕事件
+        document.getElementById('newConversationBtn').addEventListener('click', function() {
+            // 清空對話紀錄
+            document.getElementById('response_content').innerHTML = '';
+            document.getElementById('response_questions').innerHTML = '';
+
+            // 重新產生新的 thread_id
+            threadId = generateThreadId();
+            console.log(`開新對話，生成的 thread_id: ${threadId}`);
+        });
+    </script>
+</body>
+</html>
