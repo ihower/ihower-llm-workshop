@@ -93,15 +93,21 @@ def num_tokens_for_tools(functions, messages, model="gpt-5"):
 from agents import RunContextWrapper
 from agents.models.openai_responses import Converter
 
-async def num_tokens_for_agent_items(agent, messages, model="gpt-5"):
+async def num_tokens_for_agent_input_items(agent, messages, model="gpt-5"):
     ctx = RunContextWrapper(context=None)
     tools = await agent.get_all_tools(ctx)
 
     converted = Converter.convert_tools(tools, agent.handoffs).tools
 
     #print(f"converted: {converted}")
-    
+
     return num_tokens_for_tools(converted, messages)
+
+def count_tokens(text: str, model: str = "gpt-5") -> int:
+    """Count tokens in a text string using tiktoken encoding for the specified model."""
+    encoding = tiktoken.encoding_for_model(model)
+    tokens = encoding.encode(text)
+    return len(tokens)
 
 # Test real usage
 if __name__ == "__main__":  

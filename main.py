@@ -215,7 +215,7 @@ async def generate_agent_stream(query: str, previous_response_id: str = None, tr
 
 ## V2 版本: 增強 Context Engineering
 from agents import SQLiteSession
-from agents.extensions.memory import AdvancedSQLiteSession
+# from agents.extensions.memory import AdvancedSQLiteSession
 from custom_sqlite_session import CustomSQLiteSession
 
 @app.get("/api/v2/agent_stream")
@@ -227,11 +227,7 @@ async def get_agent_stream_v2(query: str, thread_id: str):
 async def generate_agent_stream_v2(query: str, thread_id: str):
 
     # session = SQLiteSession(thread_id, "conversations.db")
-    # session = CustomSQLiteSession(thread_id, "conversations.db")
-    session = AdvancedSQLiteSession(session_id=thread_id, create_tables=True, db_path="advanced_conversations.db")
-
-    current_items = await session.get_items()
-    print(f"current_items_count: {len(current_items)}")
+    # session = AdvancedSQLiteSession(session_id=thread_id, create_tables=True, db_path="advanced_conversations.db")
 
     today = datetime.now().strftime("%Y-%m-%d")
     
@@ -250,6 +246,10 @@ async def generate_agent_stream_v2(query: str, thread_id: str):
     )
     print(f"thread_id: {thread_id}")
 
+    session = CustomSQLiteSession(thread_id, "conversations.db", agent=agent)
+    current_items = await session.get_items()
+    print(f"current_items_count: {len(current_items)}")
+
     with trace("FastAPI Agent", trace_id=f"trace_{thread_id}"):
         result = Runner.run_streamed(agent, input=query, session=session)
 
@@ -257,9 +257,9 @@ async def generate_agent_stream_v2(query: str, thread_id: str):
     previous_content = ''
 
     async for event in result.stream_events():
-        print(event)
+        #print(event)
         if event.type == "raw_response_event" and event.data.type == "response.output_text.delta":
-            print(event.data.delta)
+            #print(event.data.delta)
 
             json_str += event.data.delta
             try:
@@ -298,7 +298,8 @@ async def generate_agent_stream_v2(query: str, thread_id: str):
             elif event.item.type == "tool_call_output_item":
                 print(f"-- Tool output: {event.item.output}")
             elif event.item.type == "message_output_item":
-                print(f"-- Message output:\n {ItemHelpers.text_message_output(event.item)}")                
+                #print(f"-- Message output:\n {ItemHelpers.text_message_output(event.item)}")                
+                pass
             else:
                 pass  # Ignore other event types            
 
@@ -306,7 +307,5 @@ async def generate_agent_stream_v2(query: str, thread_id: str):
     yield f"data: {json.dumps(done_event)}\n\n"
 
     print(f"result: {result.context_wrapper}")
-    await session.store_run_usage(result)
-
 
 
