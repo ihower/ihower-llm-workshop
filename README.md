@@ -59,6 +59,8 @@ http://localhost:8000/static/agent.html
 http://localhost:8000/static/agent_v2.html
 ```
 
+接下來請參考 https://github.com/ihower/openai-agents-fastapi-playbook 是 Production-Ready 的範例.
+
 
 ## Build Your Own Code Interpreter
 
