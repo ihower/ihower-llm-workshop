@@ -141,7 +141,7 @@ async def web_search(query: str) -> str:
 
     print(f"  ⚙️ 呼叫函式 web_search 結果: {response}")
 
-    return result
+    return response['results']
 
 
 @app.get("/api/v1/agent_stream")
@@ -222,7 +222,82 @@ async def generate_agent_stream(query: str, previous_response_id: str = None, tr
                 pass  # Ignore other event types            
 
     done_event = { "message": "DONE", "last_response_id": last_response_id }
-    yield f"data: {json.dumps(done_event)}\n\n"    
+    yield f"data: {json.dumps(done_event)}\n\n"
+
+
+## Simple Agent (非串流)
+@app.get("/api/v1/agent_simple")
+async def get_agent_simple(query: str, previous_response_id: str = None, trace_id: str = None):
+    today = datetime.now().strftime("%Y-%m-%d")
+
+    agent = Agent(
+        name="QA Agent",
+        instructions=f"""You are a helpful assistant that can answer questions and help with tasks. Always respond in Traditional Chinese. """,
+        tools=[web_search],
+        model="gpt-5.1",
+    )
+    print(f"previous_response_id: {previous_response_id}")
+
+    with trace("FastAPI Agent Simple", trace_id=trace_id):
+        result = await Runner.run(agent, input=query, previous_response_id=previous_response_id)
+
+    return {
+        "output": result.final_output,
+        "last_response_id": result.last_response_id
+    }
+
+
+## Simple Agent Streaming (串流但不使用 structured output)
+@app.get("/api/v1/agent_simple_stream")
+async def get_agent_simple_stream(query: str, previous_response_id: str = None, trace_id: str = None):
+    response = StreamingResponse(generate_agent_simple_stream(query, previous_response_id, trace_id), media_type="text/event-stream")
+    response.headers["X-Accel-Buffering"] = "no"
+    return response
+
+async def generate_agent_simple_stream(query: str, previous_response_id: str = None, trace_id: str = None):
+    today = datetime.now().strftime("%Y-%m-%d")
+
+    agent = Agent(
+        name="QA Agent",
+        instructions=f"""You are a helpful assistant that can answer questions and help with tasks. Always respond in Traditional Chinese.""",
+        tools=[web_search],
+        model="gpt-5.1",
+        model_settings=ModelSettings(
+            reasoning={
+                "effort": "low",
+                "summary": "auto"
+            }
+        )
+    )
+    print(f"previous_response_id: {previous_response_id}")
+
+    with trace("FastAPI Agent Simple Stream", trace_id=trace_id):
+        result = Runner.run_streamed(agent, input=query, previous_response_id=previous_response_id)
+
+        async for event in result.stream_events():
+            print(event)
+            if event.type == "raw_response_event" and event.data.type == "response.output_text.delta":
+                content = { "content": event.data.delta }
+                yield f"data: {json.dumps(content)}\n\n"
+            elif event.type == "raw_response_event" and event.data.type == "response.output_item.added" and event.data.item.type == "reasoning":
+                think_chunk = {
+                    "message": "THINK_START",
+                }
+                yield f"data: {json.dumps(think_chunk)}\n\n"
+            elif event.type == "raw_response_event" and event.data.type == "response.reasoning_summary_text.done":
+                think_chunk = {
+                    "message": "THINK_TEXT",
+                    "text": event.data.text
+                }
+                yield f"data: {json.dumps(think_chunk)}\n\n"
+            elif event.type == "run_item_stream_event":
+                if event.item.type == "tool_call_item":
+                    yield f"data: {json.dumps({'message': 'CALL_TOOL', 'tool_name': str(event.item.raw_item.name), 'arguments': str(event.item.raw_item.arguments)})}\n\n"
+
+    last_response_id = result.last_response_id
+
+    done_event = {"message": "DONE", "last_response_id": last_response_id}
+    yield f"data: {json.dumps(done_event)}\n\n"
 
 
 # 加上 context 參數 https://openai.github.io/openai-agents-python/context/
