@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM Workshop Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .subtitle {
+            color: #666;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .demo-list {
+            list-style: none;
+        }
+        .demo-list li {
+            margin-bottom: 15px;
+        }
+        .demo-list a {
+            display: block;
+            padding: 16px 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .demo-list a:hover {
+            background: #667eea;
+            color: white;
+            transform: translateX(5px);
+            border-color: #667eea;
+        }
+        .demo-list a .desc {
+            font-size: 12px;
+            color: #888;
+            margin-top: 5px;
+            font-weight: normal;
+        }
+        .demo-list a:hover .desc {
+            color: rgba(255, 255, 255, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>LLM Workshop Demo</h1>
+        <p class="subtitle">選擇一個範例開始體驗</p>
+        <ul class="demo-list">
+            <li>
+                <a href="/static/completion.html">
+                    Completion (串流翻譯)
+                    <div class="desc">Form + Streaming 基礎範例</div>
+                </a>
+            </li>
+            <li>
+                <a href="/static/structured_output.html">
+                    Structured Output
+                    <div class="desc">串流 + JSON 結構化輸出</div>
+                </a>
+            </li>
+            <li>
+                <a href="/static/agent.html">
+                    Agent v1
+                    <div class="desc">Chat Agent + Tool + Streaming</div>
+                </a>
+            </li>
+            <li>
+                <a href="/static/agent_v2.html">
+                    Agent v2
+                    <div class="desc">增強版 Context Engineering</div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 import os
 from fastapi import FastAPI
-from fastapi.responses import StreamingResponse
+from fastapi.responses import StreamingResponse, FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from openai.types.shared import reasoning
@@ -25,6 +25,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# 首頁路由
+@app.get("/")
+async def index():
+    return FileResponse("static/index.html")
 
 # 掛載靜態文件目錄
 app.mount("/static", StaticFiles(directory="static"), name="static")
