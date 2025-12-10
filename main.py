@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 import os
-from fastapi import FastAPI
+import uuid
+from fastapi import FastAPI, Request
 from fastapi.responses import StreamingResponse, FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -13,6 +14,24 @@ from datetime import datetime
 
 from dotenv import load_dotenv
 from openai import AsyncOpenAI
+
+# AG-UI Protocol imports
+from ag_ui.core import (
+    RunAgentInput,
+    EventType,
+    RunStartedEvent,
+    RunFinishedEvent,
+    RunErrorEvent,
+    TextMessageStartEvent,
+    TextMessageContentEvent,
+    TextMessageEndEvent,
+    ToolCallStartEvent,
+    ToolCallArgsEvent,
+    ToolCallEndEvent,
+    StepStartedEvent,
+    StepFinishedEvent,
+)
+from ag_ui.encoder import EventEncoder
 
 load_dotenv(".env", override=True)
 
@@ -433,3 +452,180 @@ async def generate_agent_stream_v2(query: str, thread_id: str):
     print(f"result: {result.context_wrapper}")
     print("--------------------------------")
     print(f"search_source: {result.context_wrapper.context.search_source}")
+
+
+## AG-UI Protocol Endpoint
+@app.post("/api/ag-ui")
+async def ag_ui_endpoint(input_data: RunAgentInput, request: Request):
+    """AG-UI Protocol compatible endpoint"""
+    accept_header = request.headers.get("accept")
+    encoder = EventEncoder(accept=accept_header)
+
+    response = StreamingResponse(
+        generate_ag_ui_stream(input_data, encoder),
+        media_type=encoder.get_content_type()
+    )
+    response.headers["X-Accel-Buffering"] = "no"
+    return response
+
+
+async def generate_ag_ui_stream(input_data: RunAgentInput, encoder: EventEncoder):
+    """Generate AG-UI protocol compliant event stream"""
+    today = datetime.now().strftime("%Y-%m-%d")
+
+    # Extract the last user message as query
+    query = ""
+    for msg in reversed(input_data.messages):
+        if msg.role == "user":
+            query = msg.content if isinstance(msg.content, str) else str(msg.content)
+            break
+
+    thread_id = input_data.thread_id or str(uuid.uuid4())
+    run_id = input_data.run_id or str(uuid.uuid4())
+    message_id = str(uuid.uuid4())
+
+    # Use parent_run_id as previous_response_id for conversation continuity
+    previous_response_id = input_data.parent_run_id
+    print(f"[AG-UI] thread_id: {thread_id}, run_id: {run_id}, parent_run_id (previous_response_id): {previous_response_id}")
+
+    try:
+        # Send RUN_STARTED event
+        yield encoder.encode(
+            RunStartedEvent(
+                type=EventType.RUN_STARTED,
+                thread_id=thread_id,
+                run_id=run_id
+            )
+        )
+
+        agent = Agent(
+            name="QA Agent",
+            instructions=f"""You are a helpful assistant that can answer questions and help with tasks. Always respond in Traditional Chinese. Today's date is {today}.""",
+            tools=[web_search],
+            model="gpt-5.1",
+            model_settings=ModelSettings(
+                reasoning={
+                    "effort": "low",
+                    "summary": "auto"
+                }
+            )
+        )
+
+        with trace("FastAPI AG-UI Agent", trace_id=f"trace_{run_id}"):
+            result = Runner.run_streamed(agent, input=query, previous_response_id=previous_response_id)
+
+            text_started = False
+            reasoning_step_id = None
+            last_response_id = None  # Track the last response ID from the agent
+
+            async for event in result.stream_events():
+                print(f"[AG-UI] {event}")
+
+                # Capture last_response_id from response.completed event
+                if event.type == "raw_response_event" and event.data.type == "response.completed":
+                    last_response_id = event.data.response.id
+                    print(f"[AG-UI] Captured last_response_id: {last_response_id}")
+
+                # Handle reasoning start
+                if event.type == "raw_response_event" and event.data.type == "response.output_item.added" and event.data.item.type == "reasoning":
+                    reasoning_step_id = f"step_{uuid.uuid4()}"
+                    yield encoder.encode(
+                        StepStartedEvent(
+                            type=EventType.STEP_STARTED,
+                            step_name="Thinking"
+                        )
+                    )
+
+                # Handle reasoning summary done
+                elif event.type == "raw_response_event" and event.data.type == "response.reasoning_summary_text.done":
+                    if reasoning_step_id:
+                        yield encoder.encode(
+                            StepFinishedEvent(
+                                type=EventType.STEP_FINISHED
+                            )
+                        )
+                        reasoning_step_id = None
+
+                # Handle text message delta
+                elif event.type == "raw_response_event" and event.data.type == "response.output_text.delta":
+                    # Send TEXT_MESSAGE_START on first text delta
+                    if not text_started:
+                        yield encoder.encode(
+                            TextMessageStartEvent(
+                                type=EventType.TEXT_MESSAGE_START,
+                                message_id=message_id,
+                                role="assistant"
+                            )
+                        )
+                        text_started = True
+
+                    # Send TEXT_MESSAGE_CONTENT
+                    yield encoder.encode(
+                        TextMessageContentEvent(
+                            type=EventType.TEXT_MESSAGE_CONTENT,
+                            message_id=message_id,
+                            delta=event.data.delta
+                        )
+                    )
+
+                # Handle tool calls
+                elif event.type == "run_item_stream_event":
+                    if event.item.type == "tool_call_item":
+                        tool_call_id = f"tc_{uuid.uuid4()}"
+                        tool_name = str(event.item.raw_item.name)
+                        tool_args = str(event.item.raw_item.arguments)
+
+                        yield encoder.encode(
+                            ToolCallStartEvent(
+                                type=EventType.TOOL_CALL_START,
+                                tool_call_id=tool_call_id,
+                                tool_call_name=tool_name
+                            )
+                        )
+
+                        yield encoder.encode(
+                            ToolCallArgsEvent(
+                                type=EventType.TOOL_CALL_ARGS,
+                                tool_call_id=tool_call_id,
+                                delta=tool_args
+                            )
+                        )
+
+                        yield encoder.encode(
+                            ToolCallEndEvent(
+                                type=EventType.TOOL_CALL_END,
+                                tool_call_id=tool_call_id
+                            )
+                        )
+
+        # Send TEXT_MESSAGE_END if text was started
+        if text_started:
+            yield encoder.encode(
+                TextMessageEndEvent(
+                    type=EventType.TEXT_MESSAGE_END,
+                    message_id=message_id
+                )
+            )
+
+        # Use last_response_id as the run_id for RUN_FINISHED
+        # This allows the frontend to use it as parent_run_id in the next request
+        final_run_id = last_response_id or run_id
+        print(f"[AG-UI] RUN_FINISHED with run_id: {final_run_id}")
+
+        # Send RUN_FINISHED event
+        yield encoder.encode(
+            RunFinishedEvent(
+                type=EventType.RUN_FINISHED,
+                thread_id=thread_id,
+                run_id=final_run_id
+            )
+        )
+
+    except Exception as e:
+        print(f"[AG-UI] Error: {e}")
+        yield encoder.encode(
+            RunErrorEvent(
+                type=EventType.RUN_ERROR,
+                message=str(e)
+            )
+        )
