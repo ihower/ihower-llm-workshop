@@ -7,10 +7,10 @@ def generate_number() -> int:
 
 agent = Agent(
     name="foobar",
-    model="gpt-5.1",
+    model="gpt-5.2",
     instructions="you are a helpful assistant",
     tools=[generate_number],
-    model_settings=ModelSettings( reasoning={ "effort": "high", "summary": "auto" }),
+    model_settings=ModelSettings( reasoning={ "effort": "low"}),
 )
 
 async def main():

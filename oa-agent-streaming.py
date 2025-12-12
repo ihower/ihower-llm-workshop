@@ -6,11 +6,11 @@ def generate_number() -> int:
 
 agent = Agent(
     name="foobar",
-    model="gpt-5.1",
+    model="gpt-5.2",
     instructions="""First think life and call the `generate_number` tool, 
-    then just tell me the number and life of meaning about the number. No Tool Preamble. 給摘要輸出. 用中文輸出""",
+    then just tell me the number and life of meaning about the number. No Tool Preamble. 用中文輸出""",
     tools=[generate_number],
-    #model_settings=ModelSettings( reasoning={ "effort": "none" }),
+    model_settings=ModelSettings( reasoning={ "effort": "none" }),
     #model_settings=ModelSettings( reasoning={ "effort": "low" }),
     #model_settings=ModelSettings( reasoning={ "effort": "low", "summary": "auto" }),
 )
