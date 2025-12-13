@@ -10,7 +10,8 @@ agent = Agent(
     model="gpt-5.2",
     instructions="you are a helpful assistant",
     tools=[generate_number],
-    model_settings=ModelSettings( reasoning={ "effort": "low"}),
+    #model_settings=ModelSettings( reasoning={ "effort": ""}),
+    model_settings=ModelSettings( reasoning={ "effort": "low"}, response_include=["reasoning.encrypted_content"]),
 )
 
 async def main():
