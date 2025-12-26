@@ -226,9 +226,6 @@ async def generate_agent_stream(query: str, previous_response_id: str = None, tr
                 "text": event.data.text
             }
             yield f"data: {json.dumps(think_chunk)}\n\n"   
-        elif event.type == "raw_response_event" and event.data.type == "response.completed":
-            print(f"last_response_id: {event.data}")
-            last_response_id = event.data.response.id
         elif event.type == "run_item_stream_event":
             if event.item.type == "tool_call_item":
                 print("-- Tool was called")
@@ -240,6 +237,9 @@ async def generate_agent_stream(query: str, previous_response_id: str = None, tr
             else:
                 pass  # Ignore other event types            
 
+    last_response_id = result.last_response_id
+    print(f"last_response_id: {last_response_id}")
+    
     done_event = { "message": "DONE", "last_response_id": last_response_id }
     yield f"data: {json.dumps(done_event)}\n\n"
 
