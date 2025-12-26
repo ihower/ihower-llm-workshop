@@ -47,7 +47,7 @@ npx promptfoo@latest view
 Copy `.env.example` to `.env` and edit it
 
 ```
-uvicorn main:app --reload
+uv run fastapi dev
 ```
 
 Open
